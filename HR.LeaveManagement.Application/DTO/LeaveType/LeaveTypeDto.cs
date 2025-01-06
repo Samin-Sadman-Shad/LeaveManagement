@@ -4,9 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace HR.LeaveManagement.Application.DTO
+namespace HR.LeaveManagement.Application.DTO.LeaveType
 {
-    public class LeaveTypeDto:BaseDto
+    public class LeaveTypeDto : BaseDto
     {
         public LeaveTypeEnum LeaveTypeName { get; set; }
         public int AllocatedDays { get; set; }
