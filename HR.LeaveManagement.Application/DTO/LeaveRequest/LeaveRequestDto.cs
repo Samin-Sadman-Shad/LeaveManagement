@@ -7,7 +7,7 @@ using System.Text;
 
 namespace HR.LeaveManagement.Application.DTO.LeaveRequest
 {
-    public class LeaveRequestDto : BaseDto
+    public class LeaveRequestDto : BaseDto, ILeaveRequestDto
     {
         public int LeaveTypeId { get; set; }
         //public LeaveTypeDto LeaveType { get; set; } = null!;
@@ -16,7 +16,7 @@ namespace HR.LeaveManagement.Application.DTO.LeaveRequest
 
         public string? RequestComment { get; set; }
 
-        public bool Canceled { get; set; }
+        public bool Cancelled { get; set; }
         public bool? IsApproved { get; set; }
         public DateTime? DateActioned { get; set; }
         //public string? ActionTakenBy { get; set; }

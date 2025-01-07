@@ -12,5 +12,7 @@ namespace HR.LeaveManagement.Application.Persistance.Contracts
         public Task<T>  AddAsync(T item);
         public Task<T> UpdateAsync(T item);
         public Task<T> DeleteAsync(int id);
+
+        public Task<bool> Exists(int id);
     }
 }

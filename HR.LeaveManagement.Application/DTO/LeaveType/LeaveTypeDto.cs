@@ -6,9 +6,9 @@ using System.Text;
 
 namespace HR.LeaveManagement.Application.DTO.LeaveType
 {
-    public class LeaveTypeDto : BaseDto
+    public class LeaveTypeDto : BaseDto, ILeaveTypeDto
     {
-        public LeaveTypeEnum LeaveTypeName { get; set; }
+        public string LeaveTypeName { get; set; }
         public int AllocatedDays { get; set; }
     }
 }

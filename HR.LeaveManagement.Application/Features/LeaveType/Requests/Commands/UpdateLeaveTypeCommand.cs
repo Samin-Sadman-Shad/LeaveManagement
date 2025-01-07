@@ -6,9 +6,8 @@ using System.Text;
 
 namespace HR.LeaveManagement.Application.Features.LeaveType.Requests.Commands
 {
-    public class CreateLeaveTypeCommand:IRequest<int>
-
+    public class UpdateLeaveTypeCommand:IRequest<Unit>
     {
-        public CreateLeaveTypeDto leaveTypeDto { get; set; } = null!;
+        public UpdateLeaveTypeDto leaveTypeDto { get; set; } = null!;
     }
 }

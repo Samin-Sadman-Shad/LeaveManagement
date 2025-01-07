@@ -8,7 +8,7 @@ namespace HR.LeaveManagement.Domain.Entities
 {
     public class LeaveType:BaseDomainEntity
     {
-        public LeaveTypeEnum LeaveTypeName { get; set; }
+        public string LeaveTypeName { get; set; }
         public int AllocatedDays { get; set; }
     }
 }
