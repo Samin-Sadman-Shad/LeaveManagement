@@ -6,7 +6,7 @@ using System.Text;
 
 namespace HR.LeaveManagement.Application.Features.LeaveRequest.Requests.Commands
 {
-    internal class CreateLeaveRequestCommand:IRequest<int>
+    public class CreateLeaveRequestCommand:IRequest<int>
     {
         public CreateLeaveRequestDto CreateLeaveRequestDto { get; set; } = null!;
     }

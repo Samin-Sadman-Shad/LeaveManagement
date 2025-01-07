@@ -27,7 +27,7 @@ namespace HR.LeaveManagement.Application.Features.LeaveType.Handlers.Commands
             var validationResult = await validator.ValidateAsync(request.leaveTypeDto, cancellationToken);
             if (validationResult != null)
             {
-                throw new Exception("Validation Error"!);
+                throw new Exceptions.ValidationException(validationResult);
             }
             var leaveType = await _leaveTypeRepository.GetAsync(request.leaveTypeDto.Id);
             _mapper.Map(request.leaveTypeDto, leaveType);
