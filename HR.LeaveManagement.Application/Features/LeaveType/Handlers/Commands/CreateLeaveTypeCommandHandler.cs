@@ -9,7 +9,6 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using HR.LeaveManagement.Application.DTO.LeaveType.Validators;
-using FluentValidation;
 using HR.LeaveManagement.Application.Exceptions;
 
 namespace HR.LeaveManagement.Application.Features.LeaveType.Handlers.Commands

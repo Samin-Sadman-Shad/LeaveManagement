@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using HR.LeaveManagement.Application.Exceptions;
 using HR.LeaveManagement.Application.Features.LeaveType.Requests.Commands;
 using HR.LeaveManagement.Application.Persistance.Contracts;
 using MediatR;
@@ -25,11 +26,12 @@ namespace HR.LeaveManagement.Application.Features.LeaveType.Handlers.Commands
             var leaveType = await _leaveTypeRepository.GetAsync(request.Id);
             if (leaveType == null) 
             {
-                await _leaveTypeRepository.DeleteAsync(request.Id);
-                return Unit.Value;
+                throw new NotFoundException(nameof(leaveType), request.Id);
             }
 
-            throw new NotImplementedException();
+            await _leaveTypeRepository.DeleteAsync(request.Id);
+            return Unit.Value;
+
         }
     }
 }
