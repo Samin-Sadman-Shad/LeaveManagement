@@ -1,4 +1,4 @@
-﻿using HR.LeaveManagement.Application.Persistance.Contracts;
+﻿using HR.LeaveManagement.Application.Contracts.Persistance;
 using HR.LeaveManagement.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;

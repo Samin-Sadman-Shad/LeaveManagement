@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HR.LeaveManagement.Application.Persistance.Contracts
+namespace HR.LeaveManagement.Application.Contracts.Persistance
 {
     public interface IGenericRepository<T> where T : class
     {

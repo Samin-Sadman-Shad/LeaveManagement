@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using HR.LeaveManagement.Application.DTO.LeaveAllocation;
 using HR.LeaveManagement.Application.Features.LeaveRequest.Requests.Commands;
-using HR.LeaveManagement.Application.Persistance.Contracts;
+using HR.LeaveManagement.Application.Contracts.Persistance;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -34,7 +34,7 @@ namespace HR.LeaveManagement.Application.Features.LeaveRequest.Handlers.Commands
                 //update the destination entity with corresponding value coming from request
                 _mapper.Map(request.UpdateLeaveAllocationDto, leaveRequest);
                 //entity is updated, put back it to db
-                leaveRequest = await _leaveRequestRepository.UpdateLeaveRequest(leaveRequest);
+                leaveRequest = await _leaveRequestRepository.UpdateAsync(leaveRequest);
             }
             else if (request.ChangeLeaveRequestApprovalDto != null) 
             {
