@@ -4,7 +4,7 @@ using System.Text;
 
 namespace HR.LeaveManagement.Application.DTO.Common
 {
-    public class BaseDto
+    public class BaseQueryDto:IBaseDto
     {
         public int Id { get; set; }
     }

@@ -14,10 +14,11 @@ using HR.LeaveManagement.Application.Responses;
 using System.Linq;
 using HR.LeaveManagement.Application.Models;
 using HR.LeaveManagement.Application.Contracts.Infrastrcuture;
+using System.Net;
 
 namespace HR.LeaveManagement.Application.Features.LeaveRequest.Handlers.Commands
 {
-    public class CreateLeaveRequestCommandHandler : IRequestHandler<CreateLeaveRequestCommand, BaseCommandResponse>
+    public class CreateLeaveRequestCommandHandler : IRequestHandler<CreateLeaveRequestCommand, CreateCommandResponse>
     {
         private readonly ILeaveRequestRepository _leaveRequestRepository;
         private readonly ILeaveTypeRepository _leaveTypeRepository;
@@ -32,9 +33,9 @@ namespace HR.LeaveManagement.Application.Features.LeaveRequest.Handlers.Commands
             _emailSender = emailSender;
 
         }
-        public async Task<BaseCommandResponse> Handle(CreateLeaveRequestCommand request, CancellationToken cancellationToken)
+        public async Task<CreateCommandResponse> Handle(CreateLeaveRequestCommand request, CancellationToken cancellationToken)
         {
-            var response = new BaseCommandResponse();
+            var response = new CreateCommandResponse();
             var validator = new CreateLeaveRequestDtoValidator(_leaveTypeRepository);
             var validationResult = await validator.ValidateAsync(request.CreateLeaveRequestDto);
 
@@ -43,7 +44,7 @@ namespace HR.LeaveManagement.Application.Features.LeaveRequest.Handlers.Commands
                 response.Success = false;
                 response.Message = "Validation Failed";
                 response.Errors = validationResult.Errors.Select(error => error.ErrorMessage).ToList();
-                response.StatusCode = 400;
+                response.StatusCode = HttpStatusCode.BadRequest;
                 response.StatusMessage = "Bad Request";
                 //throw new ValidationException(validationResult);
                 return response;
@@ -57,8 +58,8 @@ namespace HR.LeaveManagement.Application.Features.LeaveRequest.Handlers.Commands
             response.Success = true;
             response.Message = "New Leave request created Successfully";
             response.RecordId = leaveRequest.Id;
-            response.StatusCode = 201;
-            response.StatusMessage = "OK";
+            response.StatusCode = HttpStatusCode.Created;
+            //response.StatusMessage = Enum.GetName(HttpStatusCode.Created);
 
             var email = new Email
             {

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace HR.LeaveManagement.Application.DTO.LeaveRequest
 {
-    public class ChangeLeaveRequestApprovalDto:BaseDto
+    public class ChangeLeaveRequestApprovalDto:BaseCommandDto
     {
         public bool? IsApproved { get; set; }
         public int? ActionTakenById { get; set; }

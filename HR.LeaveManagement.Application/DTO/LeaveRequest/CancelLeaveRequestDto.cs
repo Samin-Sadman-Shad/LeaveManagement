@@ -5,7 +5,7 @@ using System.Text;
 
 namespace HR.LeaveManagement.Application.DTO.LeaveRequest
 {
-    public class CancelLeaveRequestDto:BaseDto
+    public class CancelLeaveRequestDto:BaseCommandDto
     {
         public bool Cancel {  get; set; }
     }

@@ -10,10 +10,13 @@ using System.Threading;
 using System.Threading.Tasks;
 using HR.LeaveManagement.Application.DTO.LeaveType.Validators;
 using HR.LeaveManagement.Application.Exceptions;
+using HR.LeaveManagement.Application.Responses;
+using System.Net;
+using HR.LeaveManagement.Application.Utils;
 
 namespace HR.LeaveManagement.Application.Features.LeaveType.Handlers.Commands
 {
-    public class CreateLeaveTypeCommandHandler : IRequestHandler<CreateLeaveTypeCommand, int>
+    public class CreateLeaveTypeCommandHandler : IRequestHandler<CreateLeaveTypeCommand, CreateCommandResponse>
     {
         private readonly ILeaveTypeRepository _leaveTypeRepository;
         private readonly IMapper _mapper;
@@ -24,17 +27,28 @@ namespace HR.LeaveManagement.Application.Features.LeaveType.Handlers.Commands
             _mapper = mapper;
         }
 
-        public async Task<int> Handle(CreateLeaveTypeCommand request, CancellationToken cancellationToken)
+        public async Task<CreateCommandResponse> Handle(CreateLeaveTypeCommand request, CancellationToken cancellationToken)
         {
+            var response = new CreateCommandResponse();
             var validator = new CreateLeaveTypeDtoValidator();
             var validationResult = await validator.ValidateAsync(request.leaveTypeDto, cancellationToken);
             if (!validationResult.IsValid) 
             {
-                throw new Exceptions.ValidationException(validationResult);
+                //throw new Exceptions.ValidationException(validationResult);
+                response.Success = false;
+                response.StatusCode = HttpStatusCode.BadRequest;
+                response.Errors = ValidationUtils.AddValidationErrorsToResponse(validationResult);
             }
             var leaveType = _mapper.Map<entity.LeaveType>(request.leaveTypeDto);
             leaveType = await _leaveTypeRepository.AddAsync(leaveType);
-            return leaveType.Id;
+
+            response.Success = true;
+            response.StatusCode = HttpStatusCode.Created;
+            response.Message = "New Leave type created Successfully";
+            response.RecordId = leaveType.Id;
+            response.baseDto = request.leaveTypeDto;
+            //return leaveType.Id;
+            return response;
         }
     }
 }

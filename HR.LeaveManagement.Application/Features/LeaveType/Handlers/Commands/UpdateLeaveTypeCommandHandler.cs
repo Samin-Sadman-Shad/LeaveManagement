@@ -8,10 +8,12 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using HR.LeaveManagement.Application.Responses;
+using HR.LeaveManagement.Application.Utils;
 
 namespace HR.LeaveManagement.Application.Features.LeaveType.Handlers.Commands
 {
-    public class UpdateLeaveTypeCommandHandler : IRequestHandler<UpdateLeaveTypeCommand, Unit>
+    public class UpdateLeaveTypeCommandHandler : IRequestHandler<UpdateLeaveTypeCommand, BaseCommandResponse>
     {
         private readonly ILeaveTypeRepository _leaveTypeRepository;
         private readonly IMapper _mapper;
@@ -21,18 +23,24 @@ namespace HR.LeaveManagement.Application.Features.LeaveType.Handlers.Commands
             _leaveTypeRepository = repository;
             _mapper = mapper;
         }
-        public async Task<Unit> Handle(UpdateLeaveTypeCommand request, CancellationToken cancellationToken)
+        public async Task<BaseCommandResponse> Handle(UpdateLeaveTypeCommand request, CancellationToken cancellationToken)
         {
+            var response = new BaseCommandResponse();
             var validator = new UpdateLeaveTypeDtoValidator();
             var validationResult = await validator.ValidateAsync(request.leaveTypeDto, cancellationToken);
             if (validationResult != null)
             {
-                throw new Exceptions.ValidationException(validationResult);
+                //throw new Exceptions.ValidationException(validationResult);
+                response.StatusCode = System.Net.HttpStatusCode.BadRequest;
+                response.Errors = ValidationUtils.AddValidationErrorsToResponse(validationResult);
+                return response;
             }
             var leaveType = await _leaveTypeRepository.GetAsync(request.leaveTypeDto.Id);
             _mapper.Map(request.leaveTypeDto, leaveType);
             await _leaveTypeRepository.UpdateAsync(leaveType);
-            return Unit.Value;
+
+            response.StatusCode = System.Net.HttpStatusCode.NoContent;
+            return response;
         }
     }
 }

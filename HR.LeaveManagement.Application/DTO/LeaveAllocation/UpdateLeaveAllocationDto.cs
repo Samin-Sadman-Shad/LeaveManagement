@@ -6,7 +6,7 @@ using System.Text;
 
 namespace HR.LeaveManagement.Application.DTO.LeaveAllocation
 {
-    public class UpdateLeaveAllocationDto:BaseDto,ILeaveAllocationDto
+    public class UpdateLeaveAllocationDto:BaseCommandDto,ILeaveAllocationDto
     {
         public int LeaveTypeId { get; set; }
         //public LeaveTypeDto LeaveType { get; set; } = null!;
