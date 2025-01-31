@@ -46,7 +46,7 @@ namespace HR.LeaveManagement.Application.Features.LeaveType.Handlers.Commands
             response.StatusCode = HttpStatusCode.Created;
             response.Message = "New Leave type created Successfully";
             response.RecordId = leaveType.Id;
-            response.baseDto = request.leaveTypeDto;
+            response.Record = request.leaveTypeDto;
             //return leaveType.Id;
             return response;
         }

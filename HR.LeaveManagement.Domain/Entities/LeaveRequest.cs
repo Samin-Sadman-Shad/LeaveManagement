@@ -8,7 +8,7 @@ namespace HR.LeaveManagement.Domain.Entities
     public class LeaveRequest:BaseDomainEntity
     {
         public int LeaveTypeId { get; set; }
-        public LeaveType LeaveType { get; set; } = null!;
+        public LeaveType LeaveType { get; set; } 
         public DateTime StartDate{ get; set; } = DateTime.Now;
         public DateTime EndDate{ get; set; }
 

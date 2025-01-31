@@ -52,7 +52,7 @@ namespace HR.LeaveManagement.API.Controllers
             {
                 return BadRequest(ModelState);
             }
-            return CreatedAtAction(nameof(Post), new {id = response.RecordId}, response.baseDto );
+            return CreatedAtAction(nameof(Post), new {id = response.RecordId}, response.Record );
         }
 
         // PUT api/<LeaveTypesController>/5

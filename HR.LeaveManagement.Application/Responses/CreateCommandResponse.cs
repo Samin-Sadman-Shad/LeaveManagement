@@ -11,6 +11,6 @@ namespace HR.LeaveManagement.Application.Responses
     public class CreateCommandResponse:BaseCommandResponse
     {
         public int RecordId { get; set; }
-        public IBaseDto baseDto { get; set; }
+        public IBaseDto Record { get; set; }
     }
 }

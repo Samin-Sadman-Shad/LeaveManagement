@@ -5,7 +5,7 @@ using System.Text;
 
 namespace HR.LeaveManagement.Application.DTO.LeaveRequest
 {
-    public class DeleteLeaveRequestDto:BaseCommandDto
+    public class DeleteLeaveRequestDto:BaseQueryDto
     {
 
     }
