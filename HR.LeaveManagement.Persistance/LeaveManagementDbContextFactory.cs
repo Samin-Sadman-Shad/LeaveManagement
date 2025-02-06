@@ -17,13 +17,18 @@ namespace HR.LeaveManagement.Persistance
             //provide the configuration to build out the service
             IConfigurationRoot configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json")
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .Build();
 
             var builder = new DbContextOptionsBuilder<LeaveManagementDbContext>();
-            var connectionString = configuration.GetConnectionString("LeaveManagementConnectionString");
+            //var connectionString = configuration.GetConnectionString("LeaveManagementConnectionString");
 
-            builder.UseSqlServer(connectionString);
+            //if (string.IsNullOrEmpty(connectionString))
+            //{
+            //    throw new InvalidOperationException("⚠ Connection string 'LeaveManagementConnection' is null or empty. Check appsettings.json.");
+            //}
+
+            builder.UseSqlServer("Server=SAMINSHAD186;Database=LeaveManagement;User=admin;Password=admin;");
             return new LeaveManagementDbContext(builder.Options);
         }
     }
