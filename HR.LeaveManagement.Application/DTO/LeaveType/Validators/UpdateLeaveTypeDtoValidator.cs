@@ -20,8 +20,8 @@ namespace HR.LeaveManagement.Application.DTO.LeaveType.Validators
             //    .LessThan(100).WithMessage("{PropertyName} can not exceed 100");
             Include(new ILeaveTypeDtoValidator());
 
-            RuleFor(dto => dto.Id)
-                .NotNull().WithMessage("{PropertyName} must be present");
+/*            RuleFor(dto => dto.Id)
+                .NotNull().WithMessage("{PropertyName} must be present");*/
         }
 
     }

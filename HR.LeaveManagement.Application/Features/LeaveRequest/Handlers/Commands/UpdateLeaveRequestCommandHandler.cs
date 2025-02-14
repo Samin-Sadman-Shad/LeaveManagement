@@ -20,7 +20,7 @@ namespace HR.LeaveManagement.Application.Features.LeaveRequest.Handlers.Commands
         ILeaveTypeRepository _leaveTypeRepository;
         IMapper _mapper;
 
-        public UpdateLeaveRequestCommandHandler(ILeaveRequestRepository repository, ILeaveTypeRepository leaveTypeRepo IMapper mapper)
+        public UpdateLeaveRequestCommandHandler(ILeaveRequestRepository repository, ILeaveTypeRepository leaveTypeRepo, IMapper mapper)
         {
             _leaveRequestRepository = repository;
             _leaveTypeRepository = leaveTypeRepo;

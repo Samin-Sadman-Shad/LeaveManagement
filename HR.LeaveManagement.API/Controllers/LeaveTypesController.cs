@@ -69,7 +69,7 @@ namespace HR.LeaveManagement.API.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult<BaseCommandResponse>> Put(int id, [FromBody] UpdateLeaveTypeDto leaveType)
         {
-            var response = await _mediator.Send(new UpdateLeaveTypeCommand());
+            var response = await _mediator.Send(new UpdateLeaveTypeCommand { leaveTypeDto = leaveType, Id = id});
             if (response == null)
             {
                 return BadRequest();
@@ -85,7 +85,7 @@ namespace HR.LeaveManagement.API.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<BaseCommandResponse>> Delete([FromRoute]int id)
         {
-             var response = await _mediator.Send(new UpdateLeaveTypeCommand());
+             var response = await _mediator.Send(new DeleteLeaveTypeCommand { Id = id});
             if(response == null)
             {
                 return BadRequest();

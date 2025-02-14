@@ -28,14 +28,14 @@ namespace HR.LeaveManagement.Application.Features.LeaveType.Handlers.Commands
             var response = new BaseCommandResponse();
             var validator = new UpdateLeaveTypeDtoValidator();
             var validationResult = await validator.ValidateAsync(request.leaveTypeDto, cancellationToken);
-            if (validationResult != null)
+            if (!validationResult.IsValid)
             {
                 //throw new Exceptions.ValidationException(validationResult);
                 response.StatusCode = System.Net.HttpStatusCode.BadRequest;
                 response.Errors = ValidationUtils.AddValidationErrorsToResponse(validationResult);
                 return response;
             }
-            var leaveType = await _leaveTypeRepository.GetAsync(request.leaveTypeDto.Id);
+            var leaveType = await _leaveTypeRepository.GetAsync(request.Id);
             _mapper.Map(request.leaveTypeDto, leaveType);
             await _leaveTypeRepository.UpdateAsync(leaveType);
 
