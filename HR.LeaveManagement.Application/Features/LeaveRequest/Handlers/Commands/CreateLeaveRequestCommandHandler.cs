@@ -10,15 +10,16 @@ using System.Threading;
 using System.Threading.Tasks;
 using HR.LeaveManagement.Application.DTO.LeaveRequest.Validators;
 using HR.LeaveManagement.Application.Exceptions;
-using HR.LeaveManagement.Application.Responses;
 using System.Linq;
 using HR.LeaveManagement.Application.Models;
 using HR.LeaveManagement.Application.Contracts.Infrastrcuture;
 using System.Net;
+using HR.LeaveManagement.Application.Responses.Common;
+using HR.LeaveManagement.Application.Responses.LeaveRequest;
 
 namespace HR.LeaveManagement.Application.Features.LeaveRequest.Handlers.Commands
 {
-    public class CreateLeaveRequestCommandHandler : IRequestHandler<CreateLeaveRequestCommand, CreateCommandResponse>
+    public class CreateLeaveRequestCommandHandler : IRequestHandler<CreateLeaveRequestCommand, CreateLeaveRequestDtoCommandResponse>
     {
         private readonly ILeaveRequestRepository _leaveRequestRepository;
         private readonly ILeaveTypeRepository _leaveTypeRepository;
@@ -33,9 +34,9 @@ namespace HR.LeaveManagement.Application.Features.LeaveRequest.Handlers.Commands
             _emailSender = emailSender;
 
         }
-        public async Task<CreateCommandResponse> Handle(CreateLeaveRequestCommand request, CancellationToken cancellationToken)
+        public async Task<CreateLeaveRequestDtoCommandResponse> Handle(CreateLeaveRequestCommand request, CancellationToken cancellationToken)
         {
-            var response = new CreateCommandResponse();
+            var response = new CreateLeaveRequestDtoCommandResponse();
             var validator = new CreateLeaveRequestDtoValidator(_leaveTypeRepository);
             var validationResult = await validator.ValidateAsync(request.CreateLeaveRequestDto);
 
@@ -58,6 +59,7 @@ namespace HR.LeaveManagement.Application.Features.LeaveRequest.Handlers.Commands
             response.Success = true;
             response.Message = "New Leave request created Successfully";
             response.RecordId = leaveRequest.Id;
+            response.Record = request.CreateLeaveRequestDto;
             response.StatusCode = HttpStatusCode.Created;
             //response.StatusMessage = Enum.GetName(HttpStatusCode.Created);
 

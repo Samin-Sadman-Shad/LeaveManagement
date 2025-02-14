@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace HR.LeaveManagement.Application.Responses.LeaveRequest
 {
-    public class LeaveRequestDtoQueryResponse:BaseQueryResponse
+    public class CreateLeaveRequestDtoCommandResponse:CreateCommandResponse
     {
-        public LeaveRequestDto Record { get; set; }
+        public CreateLeaveRequestDto Record {  get; set; }
     }
 }

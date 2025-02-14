@@ -8,8 +8,8 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using HR.LeaveManagement.Application.Responses;
 using HR.LeaveManagement.Application.Utils;
+using HR.LeaveManagement.Application.Responses.Common;
 
 namespace HR.LeaveManagement.Application.Features.LeaveType.Handlers.Commands
 {

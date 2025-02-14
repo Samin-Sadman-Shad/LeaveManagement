@@ -10,13 +10,14 @@ using System.Threading;
 using System.Threading.Tasks;
 using HR.LeaveManagement.Application.DTO.LeaveType.Validators;
 using HR.LeaveManagement.Application.Exceptions;
-using HR.LeaveManagement.Application.Responses;
 using System.Net;
 using HR.LeaveManagement.Application.Utils;
+using HR.LeaveManagement.Application.Responses.Common;
+using HR.LeaveManagement.Application.Responses.LeaveType;
 
 namespace HR.LeaveManagement.Application.Features.LeaveType.Handlers.Commands
 {
-    public class CreateLeaveTypeCommandHandler : IRequestHandler<CreateLeaveTypeCommand, CreateCommandResponse>
+    public class CreateLeaveTypeCommandHandler : IRequestHandler<CreateLeaveTypeCommand, CreateLeaveTypeDtoCommandResponse>
     {
         private readonly ILeaveTypeRepository _leaveTypeRepository;
         private readonly IMapper _mapper;
@@ -27,9 +28,9 @@ namespace HR.LeaveManagement.Application.Features.LeaveType.Handlers.Commands
             _mapper = mapper;
         }
 
-        public async Task<CreateCommandResponse> Handle(CreateLeaveTypeCommand request, CancellationToken cancellationToken)
+        public async Task<CreateLeaveTypeDtoCommandResponse> Handle(CreateLeaveTypeCommand request, CancellationToken cancellationToken)
         {
-            var response = new CreateCommandResponse();
+            var response = new CreateLeaveTypeDtoCommandResponse();
             var validator = new CreateLeaveTypeDtoValidator();
             var validationResult = await validator.ValidateAsync(request.leaveTypeDto, cancellationToken);
             if (!validationResult.IsValid) 

@@ -6,11 +6,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HR.LeaveManagement.Application.Responses
+namespace HR.LeaveManagement.Application.Responses.Common
 {
-    public class CreateCommandResponse:BaseCommandResponse
+    public class CreateCommandResponse : BaseCommandResponse
     {
         public int RecordId { get; set; }
-        public IBaseDto Record { get; set; }
+        public virtual IBaseDto Record { get; set; }
     }
 }

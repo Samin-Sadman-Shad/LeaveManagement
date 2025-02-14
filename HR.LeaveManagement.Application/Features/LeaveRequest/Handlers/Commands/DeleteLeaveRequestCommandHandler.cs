@@ -1,6 +1,6 @@
 ﻿using HR.LeaveManagement.Application.Contracts.Persistance;
 using HR.LeaveManagement.Application.Features.LeaveRequest.Requests.Commands;
-using HR.LeaveManagement.Application.Responses;
+using HR.LeaveManagement.Application.Responses.Common;
 using MediatR;
 using System;
 using System.Collections.Generic;

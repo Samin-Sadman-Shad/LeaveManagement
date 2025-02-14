@@ -1,4 +1,5 @@
 ﻿using HR.LeaveManagement.Application.DTO.LeaveRequest;
+using HR.LeaveManagement.Application.Responses.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;

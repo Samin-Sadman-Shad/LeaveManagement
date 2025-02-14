@@ -2,7 +2,8 @@
 using HR.LeaveManagement.Application.Features.LeaveType.Handlers.Commands;
 using HR.LeaveManagement.Application.Features.LeaveType.Requests.Commands;
 using HR.LeaveManagement.Application.Features.LeaveType.Requests.Queries;
-using HR.LeaveManagement.Application.Responses;
+using HR.LeaveManagement.Application.Responses.Common;
+using HR.LeaveManagement.Application.Responses.LeaveType;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
