@@ -4,6 +4,7 @@ using HR.LeaveManagement.Application.DTO.Common;
 using HR.LeaveManagement.Application.DTO.LeaveRequest;
 using HR.LeaveManagement.Application.Features.LeaveRequest.Requests.Queries;
 using HR.LeaveManagement.Application.Responses;
+using HR.LeaveManagement.Application.Responses.LeaveRequest;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace HR.LeaveManagement.Application.Features.LeaveRequest.Handlers.Queries
 {
-    public class GetLeaveRequestListRequesrHandler : IRequestHandler<GetLeaveRequestListRequest, BaseQueryListResponse>
+    public class GetLeaveRequestListRequesrHandler : IRequestHandler<GetLeaveRequestListRequest, LeaveRequestDtoQueryListResponse>
     {
         public readonly ILeaveRequestRepository _leaveRequestRepository;
         public readonly IMapper _mapper;
@@ -24,9 +25,9 @@ namespace HR.LeaveManagement.Application.Features.LeaveRequest.Handlers.Queries
             _leaveRequestRepository = leaveRequestRepository;
             _mapper = mapper;
         }
-        public async Task<BaseQueryListResponse> Handle(GetLeaveRequestListRequest request, CancellationToken cancellationToken)
+        public async Task<LeaveRequestDtoQueryListResponse> Handle(GetLeaveRequestListRequest request, CancellationToken cancellationToken)
         {
-            var response = new BaseQueryListResponse();
+            var response = new LeaveRequestDtoQueryListResponse();
             var leaveRequests = await _leaveRequestRepository.GetAllAsync();
             if(leaveRequests is null )
             {
@@ -38,13 +39,15 @@ namespace HR.LeaveManagement.Application.Features.LeaveRequest.Handlers.Queries
             {
                 response.Success = true;
                 response.StatusCode=System.Net.HttpStatusCode.NotFound;
-                response.Records = new List<BaseQueryDto>();
+                //response.Records = new List<BaseQueryDto>();
+                response.Records = new List<LeaveRequestListDto>();
                 return response;
             }
             var records = _mapper.Map<List<LeaveRequestListDto>>(leaveRequests);
             response.Success = true;
             response.StatusCode = System.Net.HttpStatusCode.OK;
-            response.Records = records.Cast<BaseQueryDto>().ToList();
+            //response.Records = records.Cast<BaseQueryDto>().ToList();
+            response.Records = records;
 
             return response;
         }
