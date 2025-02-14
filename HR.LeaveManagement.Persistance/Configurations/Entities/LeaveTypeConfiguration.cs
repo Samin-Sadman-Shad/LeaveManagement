@@ -25,8 +25,20 @@ namespace HR.LeaveManagement.Persistance.Configurations.Entities
                     Id = 2,
                     AllocatedDays = 14,
                     LeaveTypeName = "Sick Leaves"
+                },
+                new LeaveType
+                {
+                    Id= 3,
+                    AllocatedDays = 15,
+                    LeaveTypeName = "Compassionate Leaves"
+                },
+                new LeaveType
+                {
+                    Id= 4,
+                    AllocatedDays = 10,
+                    LeaveTypeName = "Pilgrimage"
                 }
-         );
+            );
         }
     }
 }

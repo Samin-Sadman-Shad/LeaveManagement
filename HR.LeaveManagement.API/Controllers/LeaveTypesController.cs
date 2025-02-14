@@ -2,6 +2,7 @@
 using HR.LeaveManagement.Application.Features.LeaveType.Handlers.Commands;
 using HR.LeaveManagement.Application.Features.LeaveType.Requests.Commands;
 using HR.LeaveManagement.Application.Features.LeaveType.Requests.Queries;
+using HR.LeaveManagement.Application.Responses;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,19 +22,27 @@ namespace HR.LeaveManagement.API.Controllers
 
         // GET: api/<LeaveTypesController>
         [HttpGet]
-        public async Task<ActionResult<List<LeaveTypeDto>>> Get()
+        public async Task<ActionResult<LeaveTypeDtoQueryListResponse>> Get()
         {
             //let mediator know about the request for this service
             //handler will manage all of the operation, querying via contracts, mapping
             //and returning the object(dto, vm) that is required
             //api will not interact with the actual domain objects from the database
             var leaveTypes = await _mediator.Send(new GetLeaveTypeListRequest());
-            return Ok(leaveTypes);
+            if (leaveTypes.Success)
+            {
+                return Ok(leaveTypes);
+            }
+            else
+            {
+                return BadRequest();
+            }
+            
         }
 
         // GET api/<LeaveTypesController>/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<LeaveTypeDto>> Get([FromRoute] int id)
+        public async Task<ActionResult<LeaveTypeDtoQueryResponse>> Get([FromRoute] int id)
         {
             var leaveType = await _mediator.Send(new GetLeaveTypeDetailRequest { Id = id });
             return Ok(leaveType);
@@ -41,7 +50,7 @@ namespace HR.LeaveManagement.API.Controllers
 
         // POST api/<LeaveTypesController>
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] CreateLeaveTypeDto leaveType)
+        public async Task<ActionResult<CreateCommandResponse>> Post([FromBody] CreateLeaveTypeDto leaveType)
         {
             var response = await _mediator.Send(new CreateLeaveTypeCommand { leaveTypeDto = leaveType });
             if(response == null)
@@ -57,7 +66,7 @@ namespace HR.LeaveManagement.API.Controllers
 
         // PUT api/<LeaveTypesController>/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, [FromBody] UpdateLeaveTypeDto leaveType)
+        public async Task<ActionResult<BaseCommandResponse>> Put(int id, [FromBody] UpdateLeaveTypeDto leaveType)
         {
             var response = await _mediator.Send(new UpdateLeaveTypeCommand());
             if (response == null)
@@ -73,7 +82,7 @@ namespace HR.LeaveManagement.API.Controllers
 
         // DELETE api/<LeaveTypesController>/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete([FromRoute]int id)
+        public async Task<ActionResult<BaseCommandResponse>> Delete([FromRoute]int id)
         {
              var response = await _mediator.Send(new UpdateLeaveTypeCommand());
             if(response == null)

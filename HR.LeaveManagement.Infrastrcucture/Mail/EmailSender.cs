@@ -7,13 +7,13 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HR.LeaveManagement.Infrastrcucture.Mail
+namespace HR.LeaveManagement.Infrastructure.Mail
 {
     public class EmailSender : IEmailSender
     {
-        private readonly EmailSetting _emailSettings;
+        private readonly EmailSettingOptions _emailSettings;
 
-        public EmailSender(EmailSetting setting)
+        public EmailSender(EmailSettingOptions setting)
         {
             _emailSettings = setting;
         }

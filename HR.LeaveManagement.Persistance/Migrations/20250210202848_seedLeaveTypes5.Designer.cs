@@ -4,6 +4,7 @@ using HR.LeaveManagement.Persistance;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HR.LeaveManagement.Persistance.Migrations
 {
     [DbContext(typeof(LeaveManagementDbContext))]
-    partial class LeaveManagementDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250210202848_seedLeaveTypes5")]
+    partial class seedLeaveTypes5
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -145,40 +147,6 @@ namespace HR.LeaveManagement.Persistance.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("leaveTypes");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            AllocatedDays = 10,
-                            CreatedBy = "admin",
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            LeaveTypeName = "Vacation"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            AllocatedDays = 14,
-                            CreatedBy = "admin",
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            LeaveTypeName = "Sick Leaves"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            AllocatedDays = 15,
-                            CreatedBy = "admin",
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            LeaveTypeName = "Compassionate Leaves"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            AllocatedDays = 10,
-                            CreatedBy = "admin",
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            LeaveTypeName = "Pilgrimage"
-                        });
                 });
 
             modelBuilder.Entity("HR.LeaveManagement.Domain.Entities.LeaveAllocation", b =>

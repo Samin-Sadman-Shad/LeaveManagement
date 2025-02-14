@@ -10,7 +10,7 @@ namespace HR.LeaveManagement.Persistance.Repositories
 {
     public class LeaveRequestRepository : GenericRepository<LeaveRequest>, ILeaveRequestRepository
     {
-        public LeaveRequestRepository(DbContextOptions options) : base(options)
+        public LeaveRequestRepository(LeaveManagementDbContext context) : base(context)
         {
         }
 

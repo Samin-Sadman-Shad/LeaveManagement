@@ -7,7 +7,7 @@ using System.Text;
 
 namespace HR.LeaveManagement.Application.Features.LeaveType.Requests.Queries
 {
-    public class GetLeaveTypeDetailRequest : IRequest<BaseQueryResponse>
+    public class GetLeaveTypeDetailRequest : IRequest<LeaveTypeDtoQueryResponse>
     {
         public int Id { get; set; }
     }

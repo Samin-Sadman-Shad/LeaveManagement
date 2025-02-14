@@ -15,7 +15,7 @@ using HR.LeaveManagement.Application.DTO.Common;
 
 namespace HR.LeaveManagement.Application.Features.LeaveType.Handlers.Queries
 {
-    public class GetLeaveTypeListRequestHandler : IRequestHandler<GetLeaveTypeListRequest, BaseQueryListResponse>
+    public class GetLeaveTypeListRequestHandler : IRequestHandler<GetLeaveTypeListRequest, LeaveTypeDtoQueryListResponse>
     {
         private readonly IMapper _mapper;
         private readonly ILeaveTypeRepository _leaveTypeRepository;
@@ -24,9 +24,9 @@ namespace HR.LeaveManagement.Application.Features.LeaveType.Handlers.Queries
             _mapper = mapper;
             _leaveTypeRepository = repository;
         }
-        public async Task<BaseQueryListResponse> Handle(GetLeaveTypeListRequest request, CancellationToken cancellationToken)
+        public async Task<LeaveTypeDtoQueryListResponse> Handle(GetLeaveTypeListRequest request, CancellationToken cancellationToken)
         {
-            var response = new BaseQueryListResponse();
+            var response = new LeaveTypeDtoQueryListResponse();
             var leaveTypes = await _leaveTypeRepository.GetAllAsync();
             if(leaveTypes is null ||  leaveTypes.Count == 0)
             {
@@ -36,7 +36,7 @@ namespace HR.LeaveManagement.Application.Features.LeaveType.Handlers.Queries
             var records = _mapper.Map<List<LeaveTypeDto>>(leaveTypes);
 
             response.StatusCode = HttpStatusCode.OK;
-            response.Records = records.Cast<IBaseDto>().ToList();
+            response.Records = records;
 
             return response;
         }

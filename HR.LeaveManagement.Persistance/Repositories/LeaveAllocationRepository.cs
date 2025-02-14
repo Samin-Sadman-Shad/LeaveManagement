@@ -10,7 +10,7 @@ namespace HR.LeaveManagement.Persistance.Repositories
 {
     public class LeaveAllocationRepository : GenericRepository<LeaveAllocation>, ILeaveAllocationRepository
     {
-        public LeaveAllocationRepository(DbContextOptions options):base(options)
+        public LeaveAllocationRepository(LeaveManagementDbContext context) : base(context)
         {
             
         }

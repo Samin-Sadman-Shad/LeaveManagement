@@ -13,7 +13,7 @@ using System.Net;
 
 namespace HR.LeaveManagement.Application.Features.LeaveType.Handlers.Queries
 {
-    public class GetLeaveTypeRequestHandler : IRequestHandler<GetLeaveTypeDetailRequest, BaseQueryResponse>
+    public class GetLeaveTypeRequestHandler : IRequestHandler<GetLeaveTypeDetailRequest, LeaveTypeDtoQueryResponse>
     {
         private readonly ILeaveTypeRepository _leaveTypeRepository;
         private readonly IMapper _mapper;
@@ -24,9 +24,9 @@ namespace HR.LeaveManagement.Application.Features.LeaveType.Handlers.Queries
             _mapper = mapper;
         }
 
-        public async Task<BaseQueryResponse> Handle(GetLeaveTypeDetailRequest request, CancellationToken cancellationToken)
+        public async Task<LeaveTypeDtoQueryResponse> Handle(GetLeaveTypeDetailRequest request, CancellationToken cancellationToken)
         {
-            var response = new BaseQueryResponse();
+            var response = new LeaveTypeDtoQueryResponse();
             response.RecordId = request.Id;
             var leaveTypeDetail = await _leaveTypeRepository.GetAsync(request.Id);
             if(leaveTypeDetail == null)

@@ -9,7 +9,7 @@ namespace HR.LeaveManagement.Persistance.Repositories
 {
     public class LeaveTypeRepository : GenericRepository<LeaveType>, ILeaveTypeRepository
     {
-        public LeaveTypeRepository(DbContextOptions options) : base(options)
+        public LeaveTypeRepository(LeaveManagementDbContext context) : base(context)
         {
         }
     }

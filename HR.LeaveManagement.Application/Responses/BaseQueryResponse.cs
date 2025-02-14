@@ -10,7 +10,7 @@ namespace HR.LeaveManagement.Application.Responses
     public class BaseQueryResponse:BaseResponse
     {
         public string Error { get; set; }
-        public IBaseDto Record { get; set; }
+        public virtual BaseQueryDto Record { get; set; }
         public int RecordId { get; set; }
         public string Message { get; set; }
     }

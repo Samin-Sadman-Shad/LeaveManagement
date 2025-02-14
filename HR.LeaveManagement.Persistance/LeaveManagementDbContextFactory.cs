@@ -28,7 +28,7 @@ namespace HR.LeaveManagement.Persistance
             //    throw new InvalidOperationException("⚠ Connection string 'LeaveManagementConnection' is null or empty. Check appsettings.json.");
             //}
 
-            builder.UseSqlServer("Server=SAMINSHAD186;Database=LeaveManagement;User=admin;Password=admin;");
+            builder.UseSqlServer("Server=SAMIN;Database=LeaveManagement;User=admin;Password=admin;TrustServerCertificate=True;");
             return new LeaveManagementDbContext(builder.Options);
         }
     }

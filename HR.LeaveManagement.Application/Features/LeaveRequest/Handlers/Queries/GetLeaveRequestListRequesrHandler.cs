@@ -38,13 +38,13 @@ namespace HR.LeaveManagement.Application.Features.LeaveRequest.Handlers.Queries
             {
                 response.Success = true;
                 response.StatusCode=System.Net.HttpStatusCode.NotFound;
-                response.Records = new List<IBaseDto>();
+                response.Records = new List<BaseQueryDto>();
                 return response;
             }
             var records = _mapper.Map<List<LeaveRequestListDto>>(leaveRequests);
             response.Success = true;
             response.StatusCode = System.Net.HttpStatusCode.OK;
-            response.Records = records.Cast<IBaseDto>().ToList();
+            response.Records = records.Cast<BaseQueryDto>().ToList();
 
             return response;
         }

@@ -1,5 +1,6 @@
 ﻿using HR.LeaveManagement.Domain.Common;
 using HR.LeaveManagement.Domain.Entities;
+using HR.LeaveManagement.Persistance.Configurations.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -35,7 +36,8 @@ namespace HR.LeaveManagement.Persistance
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //base.OnModelCreating(modelBuilder);
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.ApplyConfiguration(new LeaveTypeConfiguration());
             //modelBuilder.ApplyConfigurationsFromAssembly(typeof(LeaveManagementDbContext).Assembly);
         }
     }
