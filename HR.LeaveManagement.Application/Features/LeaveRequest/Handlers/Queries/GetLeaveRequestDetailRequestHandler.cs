@@ -11,11 +11,11 @@ using System.Threading.Tasks;
 using HR.LeaveManagement.Application.Responses;
 using HR.LeaveManagement.Application.DTO.Common;
 using HR.LeaveManagement.Domain.Entities;
-using HR.LeaveManagement.Application.Responses.LeaveRequest;
+using HR.LeaveManagement.Application.Responses.Common;
 
 namespace HR.LeaveManagement.Application.Features.LeaveRequest.Handlers.Queries
 {
-    public class GetLeaveRequestDetailRequestHandler : IRequestHandler<GetLeaveRequestDetailRequest, LeaveRequestDtoQueryResponse>
+    public class GetLeaveRequestDetailRequestHandler : IRequestHandler<GetLeaveRequestDetailRequest, BaseQueryResponse<LeaveRequestDto>>
 
     {
         private readonly ILeaveRequestRepository _leaveRequestRepository;
@@ -26,9 +26,9 @@ namespace HR.LeaveManagement.Application.Features.LeaveRequest.Handlers.Queries
             _leaveRequestRepository = repository;
             _mapper = mapper;
         }
-        public async Task<LeaveRequestDtoQueryResponse> Handle(GetLeaveRequestDetailRequest request, CancellationToken cancellationToken)
+        public async Task<BaseQueryResponse<LeaveRequestDto>> Handle(GetLeaveRequestDetailRequest request, CancellationToken cancellationToken)
         {
-            var response = new LeaveRequestDtoQueryResponse();
+            var response = new BaseQueryResponse<LeaveRequestDto>();
             var leaveRequest = await _leaveRequestRepository.GetAsync(request.Id);
             if (leaveRequest == null) 
             {

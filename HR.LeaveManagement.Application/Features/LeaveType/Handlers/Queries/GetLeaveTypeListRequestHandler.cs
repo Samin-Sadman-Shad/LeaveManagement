@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 using System.Net;
 using System.Linq;
 using HR.LeaveManagement.Application.DTO.Common;
-using HR.LeaveManagement.Application.Responses.LeaveType;
 using HR.LeaveManagement.Application.Responses.Common;
 
 namespace HR.LeaveManagement.Application.Features.LeaveType.Handlers.Queries

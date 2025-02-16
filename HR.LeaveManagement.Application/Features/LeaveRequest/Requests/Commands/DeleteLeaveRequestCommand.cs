@@ -11,6 +11,7 @@ namespace HR.LeaveManagement.Application.Features.LeaveRequest.Requests.Commands
 {
     public class DeleteLeaveRequestCommand:IRequest<BaseCommandResponse>
     {
-        public DeleteLeaveRequestDto DeleteLeaveRequestDto { get; set; }
+        public int Id { get; set; }
+        //public DeleteLeaveRequestDto DeleteLeaveRequestDto { get; set; }
     }
 }

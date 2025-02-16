@@ -15,11 +15,11 @@ using HR.LeaveManagement.Application.Models;
 using HR.LeaveManagement.Application.Contracts.Infrastrcuture;
 using System.Net;
 using HR.LeaveManagement.Application.Responses.Common;
-using HR.LeaveManagement.Application.Responses.LeaveRequest;
+using HR.LeaveManagement.Application.DTO.LeaveRequest;
 
 namespace HR.LeaveManagement.Application.Features.LeaveRequest.Handlers.Commands
 {
-    public class CreateLeaveRequestCommandHandler : IRequestHandler<CreateLeaveRequestCommand, CreateLeaveRequestDtoCommandResponse>
+    public class CreateLeaveRequestCommandHandler : IRequestHandler<CreateLeaveRequestCommand, CreateCommandResponse<CreateLeaveRequestDto>>
     {
         private readonly ILeaveRequestRepository _leaveRequestRepository;
         private readonly ILeaveTypeRepository _leaveTypeRepository;
@@ -34,9 +34,9 @@ namespace HR.LeaveManagement.Application.Features.LeaveRequest.Handlers.Commands
             _emailSender = emailSender;
 
         }
-        public async Task<CreateLeaveRequestDtoCommandResponse> Handle(CreateLeaveRequestCommand request, CancellationToken cancellationToken)
+        public async Task<CreateCommandResponse<CreateLeaveRequestDto>> Handle(CreateLeaveRequestCommand request, CancellationToken cancellationToken)
         {
-            var response = new CreateLeaveRequestDtoCommandResponse();
+            var response = new CreateCommandResponse<CreateLeaveRequestDto>();
             var validator = new CreateLeaveRequestDtoValidator(_leaveTypeRepository);
             var validationResult = await validator.ValidateAsync(request.CreateLeaveRequestDto);
 

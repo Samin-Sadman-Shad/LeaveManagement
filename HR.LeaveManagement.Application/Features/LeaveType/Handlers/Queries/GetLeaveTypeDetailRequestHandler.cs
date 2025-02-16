@@ -9,7 +9,6 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Net;
-using HR.LeaveManagement.Application.Responses.LeaveType;
 using HR.LeaveManagement.Application.Responses.Common;
 
 namespace HR.LeaveManagement.Application.Features.LeaveType.Handlers.Queries

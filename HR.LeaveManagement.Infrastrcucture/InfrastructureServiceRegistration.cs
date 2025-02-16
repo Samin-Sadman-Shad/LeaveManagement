@@ -42,7 +42,9 @@ namespace HR.LeaveManagement.Infrastructure
             var settings = new T();
             foreach (var child in section.GetChildren())
             {
+#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
                 PropertyInfo property = typeof(T).GetProperty(child.Key);
+#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
                 if (property != null && property.CanWrite)
                 {
                     object convertedValue = Convert.ChangeType(child.Value, property.PropertyType);

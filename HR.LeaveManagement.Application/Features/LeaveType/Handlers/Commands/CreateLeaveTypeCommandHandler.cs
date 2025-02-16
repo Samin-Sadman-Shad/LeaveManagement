@@ -13,7 +13,6 @@ using HR.LeaveManagement.Application.Exceptions;
 using System.Net;
 using HR.LeaveManagement.Application.Utils;
 using HR.LeaveManagement.Application.Responses.Common;
-using HR.LeaveManagement.Application.Responses.LeaveType;
 using HR.LeaveManagement.Application.DTO.LeaveType;
 
 namespace HR.LeaveManagement.Application.Features.LeaveType.Handlers.Commands

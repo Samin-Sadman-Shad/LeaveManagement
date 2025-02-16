@@ -11,9 +11,9 @@ builder.Services.ConfigureInfrastructureServices(builder.Configuration);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen( c=>
+builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "LeaveManagement", Version = "v1" });
+    c.SwaggerDoc("v2", new OpenApiInfo { Title = "LeaveManagement", Version = "v2" });
 });
 
 builder.Services.AddCors(o =>
@@ -35,7 +35,7 @@ if (app.Environment.IsDevelopment())
 app.UseSwagger();
 app.UseSwaggerUI(ui =>
 {
-    ui.SwaggerEndpoint("/swagger/v1/swagger.json", "LeaveManagement Api v2");
+    ui.SwaggerEndpoint("/swagger/v2/swagger.json", "LeaveManagement Api v2");
 });
 
 app.UseAuthorization();

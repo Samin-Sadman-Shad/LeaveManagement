@@ -4,7 +4,7 @@ using HR.LeaveManagement.Application.DTO.Common;
 using HR.LeaveManagement.Application.DTO.LeaveRequest;
 using HR.LeaveManagement.Application.Features.LeaveRequest.Requests.Queries;
 using HR.LeaveManagement.Application.Responses;
-using HR.LeaveManagement.Application.Responses.LeaveRequest;
+using HR.LeaveManagement.Application.Responses.Common;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace HR.LeaveManagement.Application.Features.LeaveRequest.Handlers.Queries
 {
-    public class GetLeaveRequestListRequesrHandler : IRequestHandler<GetLeaveRequestListRequest, LeaveRequestDtoQueryListResponse>
+    public class GetLeaveRequestListRequesrHandler : IRequestHandler<GetLeaveRequestListRequest, BaseQueryListResponse<LeaveRequestListDto>>
     {
         public readonly ILeaveRequestRepository _leaveRequestRepository;
         public readonly IMapper _mapper;
@@ -25,9 +25,9 @@ namespace HR.LeaveManagement.Application.Features.LeaveRequest.Handlers.Queries
             _leaveRequestRepository = leaveRequestRepository;
             _mapper = mapper;
         }
-        public async Task<LeaveRequestDtoQueryListResponse> Handle(GetLeaveRequestListRequest request, CancellationToken cancellationToken)
+        public async Task<BaseQueryListResponse<LeaveRequestListDto>> Handle(GetLeaveRequestListRequest request, CancellationToken cancellationToken)
         {
-            var response = new LeaveRequestDtoQueryListResponse();
+            var response = new BaseQueryListResponse<LeaveRequestListDto>();
             var leaveRequests = await _leaveRequestRepository.GetAllAsync();
             if(leaveRequests is null )
             {
