@@ -113,7 +113,7 @@ namespace HR.LeaveManagement.API.Controllers
             if (response is null)
             {
                 return StatusCode(500,
-                     "Unexpected error occurred while fetching leave requests.");
+                     "Unexpected error occurred while updating leave requests.");
             }
             if (response.StatusCode == HttpStatusCode.BadRequest)
             {
@@ -137,7 +137,7 @@ namespace HR.LeaveManagement.API.Controllers
             if (response is null)
             {
                 return StatusCode(500,
-                     "Unexpected error occurred while fetching leave requests.");
+                     "Unexpected error occurred while deleting leave requests.");
             }
             if (response.StatusCode == HttpStatusCode.BadRequest)
             {

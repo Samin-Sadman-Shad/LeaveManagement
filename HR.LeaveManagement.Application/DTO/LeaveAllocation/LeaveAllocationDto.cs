@@ -7,7 +7,7 @@ using System.Text;
 
 namespace HR.LeaveManagement.Application.DTO.LeaveAllocation
 {
-    public class LeaveAllocationDto : BaseQueryDto
+    public class LeaveAllocationDto : BaseQueryDto, ILeaveAllocationDto
     {
         public int LeaveTypeId { get; set; }
         //public LeaveTypeDto LeaveType { get; set; } = null!;

@@ -6,7 +6,10 @@ using System.Text;
 
 namespace HR.LeaveManagement.Application.DTO.LeaveAllocation
 {
-    public class UpdateLeaveAllocationDto:BaseQueryDto,ILeaveAllocationDto
+    /// <summary>
+    /// Client not allowed to update the Id
+    /// </summary>
+    public class UpdateLeaveAllocationDto:ILeaveAllocationDto
     {
         public int LeaveTypeId { get; set; }
         //public LeaveTypeDto LeaveType { get; set; } = null!;
