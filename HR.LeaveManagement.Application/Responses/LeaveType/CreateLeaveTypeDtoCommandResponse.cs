@@ -8,8 +8,12 @@ using System.Threading.Tasks;
 
 namespace HR.LeaveManagement.Application.Responses.LeaveType
 {
-    public class CreateLeaveTypeDtoCommandResponse:CreateCommandResponse
+/*    public class CreateLeaveTypeDtoCommandResponse:CreateCommandResponse
     {
+        private CreateLeaveTypeDtoCommandResponse()
+        {
+            
+        }
         public CreateLeaveTypeDto Record {  get; set; }
-    }
+    }*/
 }

@@ -46,7 +46,7 @@ namespace HR.LeaveManagement.Application.Features.LeaveRequest.Handlers.Commands
                 response.Message = "Validation Failed";
                 response.Errors = validationResult.Errors.Select(error => error.ErrorMessage).ToList();
                 response.StatusCode = HttpStatusCode.BadRequest;
-                response.StatusMessage = "Bad Request";
+                response.Message = "Bad Request";
                 //throw new ValidationException(validationResult);
                 return response;
             }

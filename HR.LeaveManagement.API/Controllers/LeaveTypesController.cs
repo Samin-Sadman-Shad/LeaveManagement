@@ -3,7 +3,6 @@ using HR.LeaveManagement.Application.Features.LeaveType.Handlers.Commands;
 using HR.LeaveManagement.Application.Features.LeaveType.Requests.Commands;
 using HR.LeaveManagement.Application.Features.LeaveType.Requests.Queries;
 using HR.LeaveManagement.Application.Responses.Common;
-using HR.LeaveManagement.Application.Responses.LeaveType;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,7 +22,7 @@ namespace HR.LeaveManagement.API.Controllers
 
         // GET: api/<LeaveTypesController>
         [HttpGet]
-        public async Task<ActionResult<LeaveTypeDtoQueryListResponse>> Get()
+        public async Task<ActionResult<BaseQueryListResponse<LeaveTypeDto>>> Get()
         {
             //let mediator know about the request for this service
             //handler will manage all of the operation, querying via contracts, mapping
@@ -43,7 +42,7 @@ namespace HR.LeaveManagement.API.Controllers
 
         // GET api/<LeaveTypesController>/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<LeaveTypeDtoQueryResponse>> Get([FromRoute] int id)
+        public async Task<ActionResult<BaseQueryResponse<LeaveTypeDto>>> Get([FromRoute] int id)
         {
             var leaveType = await _mediator.Send(new GetLeaveTypeDetailRequest { Id = id });
             return Ok(leaveType);
@@ -51,7 +50,7 @@ namespace HR.LeaveManagement.API.Controllers
 
         // POST api/<LeaveTypesController>
         [HttpPost]
-        public async Task<ActionResult<CreateCommandResponse>> Post([FromBody] CreateLeaveTypeDto leaveType)
+        public async Task<ActionResult<CreateCommandResponse<CreateLeaveTypeDto>>> Post([FromBody] CreateLeaveTypeDto leaveType)
         {
             var response = await _mediator.Send(new CreateLeaveTypeCommand { leaveTypeDto = leaveType });
             if(response == null)

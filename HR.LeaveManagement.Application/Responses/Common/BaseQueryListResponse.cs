@@ -9,8 +9,13 @@ namespace HR.LeaveManagement.Application.Responses.Common
 {
     public class BaseQueryListResponse : BaseResponse
     {
-        public string Error { get; set; }
+        private string Error { get; set; }
         public virtual List<BaseQueryDto> Records { get; set; }
-        public string Message { get; set; }
+        private string Message { get; set; }
+    }
+
+    public class BaseQueryListResponse<T> : BaseResponse where T : BaseQueryDto
+    {
+        public List<T> Records { get; set;}
     }
 }

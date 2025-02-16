@@ -13,4 +13,10 @@ namespace HR.LeaveManagement.Application.Responses.Common
         public int RecordId { get; set; }
         public virtual IBaseDto Record { get; set; }
     }
+
+    public class CreateCommandResponse<T>:BaseCommandResponse where T : IBaseDto
+    {
+        public int RecordId { get; set; }
+        public T Record { get; set; }
+    }
 }

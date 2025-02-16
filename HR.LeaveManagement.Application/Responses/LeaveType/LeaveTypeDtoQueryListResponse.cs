@@ -8,8 +8,12 @@ using System.Threading.Tasks;
 
 namespace HR.LeaveManagement.Application.Responses.LeaveType
 {
-    public class LeaveTypeDtoQueryListResponse : BaseQueryListResponse
+/*    public class LeaveTypeDtoQueryListResponse : BaseQueryListResponse
     {
+        private LeaveTypeDtoQueryListResponse()
+        {
+            
+        }
         public List<LeaveTypeDto> Records { get; set; }
-    }
+    }*/
 }

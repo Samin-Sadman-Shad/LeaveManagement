@@ -10,28 +10,30 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Net;
 using HR.LeaveManagement.Application.Responses.LeaveType;
+using HR.LeaveManagement.Application.Responses.Common;
 
 namespace HR.LeaveManagement.Application.Features.LeaveType.Handlers.Queries
 {
-    public class GetLeaveTypeRequestHandler : IRequestHandler<GetLeaveTypeDetailRequest, LeaveTypeDtoQueryResponse>
+    public class GetLeaveTypeDetailRequestHandler : IRequestHandler<GetLeaveTypeDetailRequest, BaseQueryResponse<LeaveTypeDto>>
     {
         private readonly ILeaveTypeRepository _leaveTypeRepository;
         private readonly IMapper _mapper;
 
-        public GetLeaveTypeRequestHandler(ILeaveTypeRepository repository, IMapper mapper)
+        public GetLeaveTypeDetailRequestHandler(ILeaveTypeRepository repository, IMapper mapper)
         {
             _leaveTypeRepository = repository;
             _mapper = mapper;
         }
 
-        public async Task<LeaveTypeDtoQueryResponse> Handle(GetLeaveTypeDetailRequest request, CancellationToken cancellationToken)
+        public async Task<BaseQueryResponse<LeaveTypeDto>> Handle(GetLeaveTypeDetailRequest request, CancellationToken cancellationToken)
         {
-            var response = new LeaveTypeDtoQueryResponse();
-            response.RecordId = request.Id;
+            var response = new BaseQueryResponse<LeaveTypeDto>();
+            //response.RecordId = request.Id;
             var leaveTypeDetail = await _leaveTypeRepository.GetAsync(request.Id);
             if(leaveTypeDetail == null)
             {
                 response.StatusCode = HttpStatusCode.NotFound;
+                //response.Message = "Leave type not found";
                 response.Message = "Leave type not found";
             }
             var leaveTypeDto = _mapper.Map<LeaveTypeDto>(leaveTypeDetail);

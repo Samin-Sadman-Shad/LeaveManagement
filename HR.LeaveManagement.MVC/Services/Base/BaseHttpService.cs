@@ -18,7 +18,8 @@ namespace HR.LeaveManagement.MVC.Services.Base
         {
             if (_localStorage.DoesExist("token"))
             {
-                _client.HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _localStorage.getStorageValue<string>("token"));
+                _client.HttpClient.DefaultRequestHeaders.Authorization = 
+                    new AuthenticationHeaderValue("Bearer", _localStorage.getStorageValue<string>("token"));
             }
         }
     }

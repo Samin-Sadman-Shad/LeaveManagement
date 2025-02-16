@@ -35,7 +35,7 @@ if (app.Environment.IsDevelopment())
 app.UseSwagger();
 app.UseSwaggerUI(ui =>
 {
-    ui.SwaggerEndpoint("/swagger/v1/swagger.json", "LeaveManagement Api v1");
+    ui.SwaggerEndpoint("/swagger/v1/swagger.json", "LeaveManagement Api v2");
 });
 
 app.UseAuthorization();
