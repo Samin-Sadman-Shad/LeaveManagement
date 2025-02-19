@@ -39,6 +39,7 @@ namespace HR.LeaveManagement.Application.Features.LeaveType.Handlers.Commands
                 response.Success = false;
                 response.StatusCode = HttpStatusCode.BadRequest;
                 response.Errors = ValidationUtils.AddValidationErrorsToResponse(validationResult);
+                return response;
             }
             var leaveType = _mapper.Map<entity.LeaveType>(request.leaveTypeDto);
             leaveType = await _leaveTypeRepository.AddAsync(leaveType);
