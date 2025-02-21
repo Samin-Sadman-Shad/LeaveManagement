@@ -9,9 +9,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddHttpClient<IClient, Client>(c=> c.BaseAddress = new Uri("http://localhost:44303"));
+builder.Services.AddHttpClient<IClient, Client>(c=> c.BaseAddress = new Uri("http://localhost:5098"));
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 builder.Services.AddSingleton<ILocalStorageService, LocalStorageService>();
+builder.Services.AddSingleton<ILeaveTypeService, LeaveTypeService>();
 
 var app = builder.Build();
 
@@ -29,7 +30,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseAuthorization();
+//app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",

@@ -8,5 +8,7 @@ namespace HR.LeaveManagement.MVC.Services.Base
         public string Message { get; set; }
         public List<string> ValidationErrors { get; set; }
         public T Data { get; set; }
+
+        public bool Success { get; set; }
     }
 }
