@@ -1,4 +1,4 @@
-﻿using HR.LeaveManagement.Application.Models;
+﻿using HR.LeaveManagement.Application.Models.Emails;
 using System;
 using System.Collections.Generic;
 using System.Text;

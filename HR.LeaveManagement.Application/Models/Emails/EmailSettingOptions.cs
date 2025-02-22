@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace HR.LeaveManagement.Application.Models
+namespace HR.LeaveManagement.Application.Models.Emails
 {
     /// <summary>
     /// Uses option pattern to bind the properties to a particular section from congiguration.

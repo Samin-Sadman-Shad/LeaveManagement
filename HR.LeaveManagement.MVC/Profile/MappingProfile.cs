@@ -13,9 +13,9 @@ namespace HR.LeaveManagement.MVC.Profile
         {
             CreateMap<LeaveType, LeaveTypeViewModel>().ReverseMap();
             CreateMap<LeaveType, CreateLeaveTypeViewModel>().ReverseMap();
-            CreateMap<LeaveTypeDto, LeaveTypeViewModel>();
-            CreateMap<CreateLeaveTypeDto, CreateLeaveTypeViewModel>();
-            CreateMap<UpdateLeaveTypeDto, LeaveTypeViewModel>();
+            CreateMap<LeaveTypeDto, LeaveTypeViewModel>().ReverseMap();
+            CreateMap<CreateLeaveTypeDto, CreateLeaveTypeViewModel>().ReverseMap();
+            CreateMap<UpdateLeaveTypeDto, LeaveTypeViewModel>().ReverseMap();
         }
 
         

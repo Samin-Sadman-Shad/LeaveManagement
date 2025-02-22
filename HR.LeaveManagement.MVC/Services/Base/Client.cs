@@ -12,5 +12,17 @@
                 return _httpClient;
             }
         }
+
+        public bool ReadResponse
+        {
+            get
+            {
+                return ReadResponseAsString;
+            }
+            set
+            {
+                ReadResponseAsString = value;
+            }
+        }
     }
 }

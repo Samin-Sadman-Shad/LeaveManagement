@@ -1,6 +1,8 @@
 ﻿using HR.LeaveManagement.MVC.Contracts;
+using HR.LeaveManagement.MVC.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace HR.LeaveManagement.MVC.Controllers
 {
@@ -22,7 +24,8 @@ namespace HR.LeaveManagement.MVC.Controllers
         // GET: LeaveTypesServiceController/Details/5
         public async Task< ActionResult> Details(int id)
         {
-            return View();
+            var leaveTypeVM = await _leaveTypeService.GetById(id);
+            return View(leaveTypeVM);
         }
 
         // GET: LeaveTypesServiceController/Create
@@ -34,58 +37,91 @@ namespace HR.LeaveManagement.MVC.Controllers
         // POST: LeaveTypesServiceController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(IFormCollection collection)
+        public async Task<ActionResult> Create(CreateLeaveTypeViewModel viewModel)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                var response = await _leaveTypeService.Create(viewModel);
+                if (response.Success)
+                {
+                    return RedirectToAction(nameof(Index));
+                }
+                else if(response.StatusCode == Services.Base.HttpStatusCode._400)
+                {
+                    ModelState.AddModelError("Errors", response.ValidationErrors.SelectMany(i => i).ToString());
+                }
+                
             }
             catch
             {
-                return View();
+                ModelState.AddModelError("Error", "Unexpected error occurred. Please contact to service Administrater");
             }
+            return View(viewModel);
+
         }
 
         // GET: LeaveTypesServiceController/Edit/5
         public async Task<ActionResult> Edit(int id)
         {
-            return View();
+            var leaveTypeVM = await _leaveTypeService.GetById(id);
+            return View(leaveTypeVM);
         }
 
         // POST: LeaveTypesServiceController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(int id, IFormCollection collection)
+        public async Task<ActionResult> Edit(int id, LeaveTypeViewModel  viewModel)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                var response = await _leaveTypeService.Update(id, viewModel);
+                if(response.Success)
+                {
+                    return RedirectToAction(nameof(Index));
+                }
+                else if (response.StatusCode == Services.Base.HttpStatusCode._400)
+                {
+                    ModelState.AddModelError("Errors", response.ValidationErrors.SelectMany(i => i).ToString());
+                }
+
             }
             catch
             {
-                return View();
+                ModelState.AddModelError("Error", "Unexpected error occurred. Please contact to service Administrater");
             }
+            return View(viewModel);
         }
 
         // GET: LeaveTypesServiceController/Delete/5
-        public async Task<ActionResult> Delete(int id)
+/*        public async Task<ActionResult> Delete(int id)
         {
-            return View();
-        }
+            var leaveTypeVM = await _leaveTypeService.GetById(id);
+            return View(leaveTypeVM);
+        }*/
 
         // POST: LeaveTypesServiceController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Delete(int id, IFormCollection collection)
+        public async Task<ActionResult> Delete(int id)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                var response = await _leaveTypeService.Delete(id);
+                if (response.Success)
+                {
+                    return RedirectToAction(nameof(Index));
+                }
+                else if (response.StatusCode == Services.Base.HttpStatusCode._400)
+                {
+                    ModelState.AddModelError("Errors", response.ValidationErrors.SelectMany(i => i).ToString());
+                }
+
             }
             catch
             {
-                return View();
+                ModelState.AddModelError("Error", "Unexpected error occurred. Please contact to service Administrater");
             }
+            return BadRequest();
         }
     }
 }

@@ -24,6 +24,7 @@ namespace HR.LeaveManagement.MVC.Services
             {
                 var response = new Response<int>();
                 var createLeaveTypeDto = _mapper.Map<CreateLeaveTypeDto>(model);
+                //_client.ReadResponse = true;
                 var apiResult = await _client.LeaveTypesPOSTAsync(createLeaveTypeDto);
                 if (apiResult is null)
                 {
@@ -41,10 +42,15 @@ namespace HR.LeaveManagement.MVC.Services
                 {
                     response.Success = false;
                     response.StatusCode = apiResult.StatusCode;
-                    foreach (var error in apiResult.Errors)
+                    response.Message = apiResult.Message;
+                    if(apiResult.Errors != null)
                     {
-                        response.ValidationErrors.Add(error);
+                        foreach (var error in apiResult.Errors)
+                        {
+                            response.ValidationErrors.Add(error);
+                        }
                     }
+
                 }
 
                 return response;
@@ -135,10 +141,14 @@ namespace HR.LeaveManagement.MVC.Services
                 {
                     response.Success = false;
                     response.StatusCode = apiResult.StatusCode;
-                    foreach (var error in apiResult.Errors)
+                    if(apiResult.Errors != null)
                     {
-                        response.ValidationErrors.Add(error);
+                        foreach (var error in apiResult.Errors)
+                        {
+                            response.ValidationErrors.Add(error);
+                        }
                     }
+
                 }
 
                 return response;

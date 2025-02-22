@@ -16,6 +16,7 @@ using HR.LeaveManagement.Application.Contracts.Infrastrcuture;
 using System.Net;
 using HR.LeaveManagement.Application.Responses.Common;
 using HR.LeaveManagement.Application.DTO.LeaveRequest;
+using HR.LeaveManagement.Application.Models.Emails;
 
 namespace HR.LeaveManagement.Application.Features.LeaveRequest.Handlers.Commands
 {

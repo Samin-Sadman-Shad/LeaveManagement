@@ -1225,7 +1225,17 @@ namespace HR.LeaveManagement.MVC.Services.Base
                         ProcessResponse(client_, response_);
 
                         var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
+                        if (status_ == 204)
+                        {
+                            var commandResponse = new CreateCommandResponseOfCreateLeaveTypeDto
+                            {
+                                Success = response_.IsSuccessStatusCode,
+                                StatusCode = HttpStatusCode._204
+
+                            };
+                            return commandResponse;
+                        }
+                        else if (status_ == 200 || status_ == 202)
                         {
                             var objectResponse_ = await ReadObjectResponseAsync<CreateCommandResponseOfCreateLeaveTypeDto>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
@@ -1393,7 +1403,17 @@ namespace HR.LeaveManagement.MVC.Services.Base
                         ProcessResponse(client_, response_);
 
                         var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
+                        if (status_ == 204)
+                        {
+                            var commandResponse = new BaseCommandResponse
+                            {
+                                Success = response_.IsSuccessStatusCode,
+                                StatusCode = HttpStatusCode._204
+
+                            };
+                            return commandResponse;
+                        }
+                        else if(status_ == 200 || status_ == 202)
                         {
                             var objectResponse_ = await ReadObjectResponseAsync<BaseCommandResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
@@ -1475,7 +1495,17 @@ namespace HR.LeaveManagement.MVC.Services.Base
                         ProcessResponse(client_, response_);
 
                         var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
+                        if (status_ == 204)
+                        {
+                            var commandResponse = new BaseCommandResponse
+                            {
+                                Success = response_.IsSuccessStatusCode,
+                                StatusCode = HttpStatusCode._204
+
+                            };
+                            return commandResponse;
+                        }
+                        else if (status_ == 200 || status_ == 202)
                         {
                             var objectResponse_ = await ReadObjectResponseAsync<BaseCommandResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
@@ -1559,6 +1589,17 @@ namespace HR.LeaveManagement.MVC.Services.Base
                     throw new ApiException(message, (int)response.StatusCode, string.Empty, headers, exception);
                 }
             }
+        }
+
+        protected virtual async Task<ObjectResponseResult<T>> ReadRawResponseAsync<T>(HttpResponseMessage _response, 
+            IReadOnlyDictionary<string, IEnumerable<string>> _headers)
+        {
+            var result = new ObjectResponseResult<T>();
+            if(_response is null)
+            {
+                return new ObjectResponseResult<T> ( default(T), string.Empty);
+            }
+            return result;
         }
 
         private string ConvertToString(object value, System.Globalization.CultureInfo cultureInfo)
