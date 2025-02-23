@@ -18,11 +18,11 @@ namespace HR.LeaveManagement.Identity.Services
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
-        private readonly JwtSettings _jwtSettings;
+        private readonly JwtSettingOptions _jwtSettings;
 
         public AuthService(UserManager<ApplicationUser> userManager, 
             SignInManager<ApplicationUser> signInManager,
-            IOptions<JwtSettings>  jwtSettings)
+            IOptions<JwtSettingOptions>  jwtSettings)
         {
             _userManager = userManager;
             _signInManager = signInManager;
