@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HR.LeaveManagement.Application.Models.Identity
 {
-    public class AuthResponse
+    public class AuthResponse:IAuthResponse
     {
         public int Id { get; set; }
         public string UserName { get; set; }
