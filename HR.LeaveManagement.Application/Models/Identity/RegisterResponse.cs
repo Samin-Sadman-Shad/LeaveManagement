@@ -8,6 +8,7 @@ namespace HR.LeaveManagement.Application.Models.Identity
 {
     public class RegisterResponse
     {
-        public int UserId { get; set; }
+        public string? UserId { get; set; }
+        public string? RegisterError { get; set; }
     }
 }

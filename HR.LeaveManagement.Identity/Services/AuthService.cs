@@ -45,6 +45,19 @@ namespace HR.LeaveManagement.Identity.Services
             }
             if (result.Succeeded)
             {
+                //user has successfully signed in
+                //generate the token for the user
+                var jwt = await GenerateToken(user);
+                var authReponse = new AuthResponse
+                {
+                    Id = user.Id,
+                    UserName = user.UserName,
+                    Email = user.Email,
+                    Token = new JwtSecurityTokenHandler().WriteToken(jwt),
+
+                };
+
+                return authReponse;
 
             }
             if(result.IsNotAllowed)
@@ -58,8 +71,49 @@ namespace HR.LeaveManagement.Identity.Services
             throw new NotImplementedException();
         }
 
-        public Task<RegisterResponse> Register(RegisterRequest request)
+        public async Task<RegisterResponse> Register(RegisterRequest request)
         {
+            var existingUser = await _userManager.FindByNameAsync(request.UserName);
+            if(existingUser is not null)
+            {
+                var response = new RegisterResponse
+                {
+                    RegisterError = "User already exists with this user name!"
+                };
+                return response;
+            }
+            var existingEmail = await _userManager.FindByEmailAsync(request.Email);
+            if (existingEmail is not null)
+            {
+                var response = new RegisterResponse
+                {
+                    RegisterError = "User already exists with this email!"
+                };
+                return response;
+            }
+
+
+            var user = new ApplicationUser
+            {
+                Email = request.Email,
+                FirstName = request.FirstName,
+                LastName = request.LastName,
+                UserName = request.UserName,
+                
+            };
+            var passwordHash = _userManager.PasswordHasher.HashPassword(user, request.Password);
+            user.PasswordHash = passwordHash;
+
+            var result =  await _userManager.CreateAsync(user);
+            if (result.Succeeded)
+            {
+                await _userManager.AddToRoleAsync(user, "Employee");
+                return new RegisterResponse { UserId = user.Id };
+            }
+            else
+            {
+                throw new Exception($"{result.Errors}");
+            }
             throw new NotImplementedException();
         }
 

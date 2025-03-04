@@ -42,7 +42,7 @@ if (app.Environment.IsDevelopment())
 
 }
 
-app.UseAuthentication(JwtBearerDefaults);
+app.UseAuthentication();
 app.UseSwagger();
 app.UseSwaggerUI(ui =>
 {
