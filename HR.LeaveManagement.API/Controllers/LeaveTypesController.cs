@@ -3,6 +3,7 @@ using HR.LeaveManagement.Application.Features.LeaveType.Requests.Commands;
 using HR.LeaveManagement.Application.Features.LeaveType.Requests.Queries;
 using HR.LeaveManagement.Application.Responses.Common;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -49,6 +50,7 @@ namespace HR.LeaveManagement.API.Controllers
 
         // POST api/<LeaveTypesController>
         [HttpPost]
+        [Authorize]
         public async Task<ActionResult<CreateCommandResponse<CreateLeaveTypeDto>>> Post([FromBody] CreateLeaveTypeDto leaveType)
         {
             var response = await _mediator.Send(new CreateLeaveTypeCommand { leaveTypeDto = leaveType });
@@ -65,6 +67,7 @@ namespace HR.LeaveManagement.API.Controllers
 
         // PUT api/<LeaveTypesController>/5
         [HttpPut("{id}")]
+        [Authorize]
         public async Task<ActionResult<BaseCommandResponse>> Put(int id, [FromBody] UpdateLeaveTypeDto leaveType)
         {
             var response = await _mediator.Send(new UpdateLeaveTypeCommand { leaveTypeDto = leaveType, Id = id});
@@ -81,6 +84,7 @@ namespace HR.LeaveManagement.API.Controllers
 
         // DELETE api/<LeaveTypesController>/5
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<ActionResult<BaseCommandResponse>> Delete([FromRoute]int id)
         {
              var response = await _mediator.Send(new DeleteLeaveTypeCommand { Id = id});

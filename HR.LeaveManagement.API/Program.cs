@@ -5,10 +5,16 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using HR.LeaveManagement.API.Utils;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using EllipticCurve;
 
 var builder = WebApplication.CreateBuilder(args);
+
+
+
 builder.Services.ConfigurePersistsanceServices(builder.Configuration);
 builder.Services.ConfigureApplicationServices();
+builder.Services.ConfigureInfrastructureServices(builder.Configuration);
 builder.Services.ConfigureInfrastructureServices(builder.Configuration);
 
 builder.Services.AddControllers();
@@ -36,6 +42,7 @@ if (app.Environment.IsDevelopment())
 
 }
 
+app.UseAuthentication(JwtBearerDefaults);
 app.UseSwagger();
 app.UseSwaggerUI(ui =>
 {
@@ -49,3 +56,5 @@ app.MapControllers();
 /*app.MapGet("/", () => "Hello World!");*/
 
 app.Run();
+
+

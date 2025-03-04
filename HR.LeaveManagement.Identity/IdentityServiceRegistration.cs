@@ -20,7 +20,7 @@ namespace HR.LeaveManagement.Identity
 {
     public static class IdentityServiceRegistration
     {
-        public static IServiceCollection AddIdentityServices(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection ConfigureIdentityServices(this IServiceCollection services, IConfiguration configuration)
         {
             JwtSettingOptions jwtSettingOptions = new JwtSettingOptions();
             var section = configuration.GetSection(JwtSettingOptions.jwtSettings);
