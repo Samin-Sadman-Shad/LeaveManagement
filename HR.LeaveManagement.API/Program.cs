@@ -7,6 +7,7 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 using HR.LeaveManagement.API.Utils;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using EllipticCurve;
+using HR.LeaveManagement.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +17,7 @@ builder.Services.ConfigurePersistsanceServices(builder.Configuration);
 builder.Services.ConfigureApplicationServices();
 builder.Services.ConfigureInfrastructureServices(builder.Configuration);
 builder.Services.ConfigureInfrastructureServices(builder.Configuration);
+builder.Services.ConfigureIdentityServices(builder.Configuration);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

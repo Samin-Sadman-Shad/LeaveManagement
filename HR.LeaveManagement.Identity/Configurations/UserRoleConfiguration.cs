@@ -28,7 +28,7 @@ namespace HR.LeaveManagement.Identity.Configurations
                 {
                     UserId = "9e224968-33e4-4652-b7b7-8574d048cdb9",
                     RoleId = "cbc43a8e-f7bb-4445-baaf-1add431ffbbf",
-                },);
+                });
         }
     }
 }

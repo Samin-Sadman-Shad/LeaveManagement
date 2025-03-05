@@ -117,7 +117,7 @@ namespace HR.LeaveManagement.Identity.Services
             throw new NotImplementedException();
         }
 
-        async Task<JwtSecurityToken> GenerateToken(ApplicationUser user)
+        private async Task<JwtSecurityToken> GenerateToken(ApplicationUser user)
         {
             //generate user claims
             var userClaims = await _userManager.GetClaimsAsync(user);
