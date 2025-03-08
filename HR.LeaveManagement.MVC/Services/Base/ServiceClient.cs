@@ -17,15 +17,27 @@
 #pragma warning disable 8604 // Disable "CS8604 Possible null reference argument for parameter"
 #pragma warning disable 8625 // Disable "CS8625 Cannot convert null literal to non-nullable reference type"
 #pragma warning disable 8765 // Disable "CS8765 Nullability of type of parameter doesn't match overridden member (possibly because of nullability attributes)."
+using System.Threading.Tasks;
 
 namespace HR.LeaveManagement.MVC.Services.Base
 {
+    using HR.LeaveManagement.Application.Models.Identity;
     using System.Net;
+    using System.Text;
+    using System.Text.Json.Serialization;
     using System = global::System;
 
     [System.CodeDom.Compiler.GeneratedCode("NSwag", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial interface IClient
     {
+
+        Task<AuthResponse> LoginAsync(AuthRequest body);
+        Task<AuthResponse> LoginAsync(AuthRequest body, CancellationToken cancellationToken);
+
+        Task<RegisterResponse> RegisterAsync(RegisterRequest body);
+
+        Task<RegisterResponse> RegisterAsync(RegisterRequest body, CancellationToken cancellationToken);
+
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<BaseQueryListResponseOfLeaveAllocationDto> LeaveAllocationsGETAsync();
@@ -1534,6 +1546,170 @@ namespace HR.LeaveManagement.MVC.Services.Base
             }
         }
 
+        public async Task<AuthResponse> LoginAsync(AuthRequest body)
+        {
+            //throw new NotImplementedException();
+            return await LoginAsync(body, CancellationToken.None);
+        }
+
+        public async Task<AuthResponse> LoginAsync(AuthRequest body, CancellationToken cancellationToken)
+        {
+            var _urlBuilder = new StringBuilder();
+            _urlBuilder.Append("api/Account/login");
+
+            var client = _httpClient;
+            var disposeClient = false;
+            try
+            {
+                using (var requestMessage = new HttpRequestMessage())
+                {
+                    var stringContent = new System.Net.Http.StringContent(Newtonsoft.Json.JsonConvert.SerializeObject(body, _settings.Value));
+                    stringContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+                    requestMessage.Content = stringContent;
+                    requestMessage.Method = HttpMethod.Post;
+
+                    requestMessage.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
+
+                    PrepareRequest(client, requestMessage, _urlBuilder);
+
+                    var url = _urlBuilder.ToString();
+                    requestMessage.RequestUri = new System.Uri(url, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client, requestMessage, _urlBuilder);
+
+                    var responseMessage = await client.SendAsync(requestMessage, HttpCompletionOption.ResponseHeadersRead, cancellationToken);
+                    var disposeResponse = true;
+                    try
+                    {
+                        var responseHeaders = Enumerable.ToDictionary(responseMessage.Headers, h => h.Key, h => h.Value);
+                        if (responseMessage.Content is not null && responseMessage.Content.Headers is not null)
+                        {
+                            foreach (var kvp in responseMessage.Content.Headers)
+                            {
+                                responseHeaders[kvp.Key] = kvp.Value;
+                            }
+                        }
+
+                        ProcessResponse(client, responseMessage);
+                        var statusCode = (int)responseMessage.StatusCode;
+                        if (statusCode == 200 || statusCode == 201)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<AuthResponse>(responseMessage, responseHeaders, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", statusCode, objectResponse_.Text, responseHeaders, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        {
+                            var responseData = responseMessage.Content == null ? null
+                                : await responseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
+                            throw new ApiException("The HTTP status code of the response was not expected (" + statusCode + ").", 
+                                statusCode, responseData, responseHeaders, null);
+                        }
+                    }
+/*                    catch (Exception ex)
+                    {
+
+                    }*/
+                    finally
+                    {
+                        if (disposeResponse) responseMessage.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient) client.Dispose();
+            }
+            
+
+            //throw new NotImplementedException();
+        }
+
+        public async Task<RegisterResponse> RegisterAsync(RegisterRequest body)
+        {
+            return await RegisterAsync(body, CancellationToken.None);
+        }
+
+        public async Task<RegisterResponse> RegisterAsync(RegisterRequest body, CancellationToken cancellationToken)
+        {
+            var urlBuilder_ = new System.Text.StringBuilder();
+            urlBuilder_.Append("api/Account/register");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var httpRequest = new System.Net.Http.HttpRequestMessage())
+                {
+                    //serialize the body to json string
+                    var json = Newtonsoft.Json.JsonConvert.SerializeObject(body, _settings.Value);
+                    //convert the json string to content string
+                    var httpContent = new System.Net.Http.StringContent(json);
+                    //set the content type to json
+                    httpContent.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    //set the string content as request body of the request
+                    httpRequest.Content = httpContent;
+                    //set the request method
+                    httpRequest.Method = new System.Net.Http.HttpMethod("POST");
+                    //content negotiation
+                    httpRequest.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
+
+                    PrepareRequest(client_, httpRequest, urlBuilder_);
+                    //set the uri of the request
+                    var url_ = urlBuilder_.ToString();
+                    httpRequest.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, httpRequest, url_);
+
+                    //send the request and get raw response
+                    var response_ = await client_.SendAsync(httpRequest, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        //read the headers from raw request and save in to a dictionary
+                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        //get the status code and convert the response content(body) to an object
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200 || status_ == 201)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<RegisterResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
         protected struct ObjectResponseResult<T>
         {
             public ObjectResponseResult(T responseObject, string responseText)
@@ -1655,6 +1831,8 @@ namespace HR.LeaveManagement.MVC.Services.Base
             var result = System.Convert.ToString(value, cultureInfo);
             return result == null ? "" : result;
         }
+
+
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
