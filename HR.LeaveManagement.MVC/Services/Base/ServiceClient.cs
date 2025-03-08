@@ -1552,6 +1552,15 @@ namespace HR.LeaveManagement.MVC.Services.Base
             return await LoginAsync(body, CancellationToken.None);
         }
 
+        /// <summary>
+        /// Calls the api for login by creating HttpRequestMessage and send the request. 
+        /// It receives a HttpResponseMessage with AuthResponse which contains the token
+        /// The AuthResponse with token is returned only, token is not saved yet
+        /// </summary>
+        /// <param name="body"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        /// <exception cref="ApiException"></exception>
         public async Task<AuthResponse> LoginAsync(AuthRequest body, CancellationToken cancellationToken)
         {
             var _urlBuilder = new StringBuilder();
