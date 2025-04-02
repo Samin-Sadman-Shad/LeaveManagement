@@ -13,6 +13,7 @@ namespace HR.LeaveManagement.MVC.Services
     {
         //allows to access the context of http request
         private readonly IHttpContextAccessor _httpContextAccessor;
+        //will not be injected, will be initialized in constructor
         private JwtSecurityTokenHandler _jwtSecurityTokenHandler;
 
         public AuthenticationService(IHttpContextAccessor httpContextAccessor
@@ -31,30 +32,45 @@ namespace HR.LeaveManagement.MVC.Services
         /// <returns></returns>
         public async Task<bool> Authenticate(string email, string password)
         {
-            AuthRequest request = new AuthRequest { Email = email, Password = password };
-
-            var authResponse = await _client.LoginAsync(request);
-            if (authResponse != null && authResponse.Token is not null)
+            try
             {
-                //extract the token
-                var token = authResponse.Token;
-                //read and parse the claims from token
-                var claims = ParseToken(token);
-                //create user for the claims
-                //once user is created, store that user record store user session as a cookie
-                //on client side user is a ClaimsPrincipal with claims
-                var user = new ClaimsPrincipal(new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme));
-                //let the user sign in
-                var login = _httpContextAccessor.HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, user);
-                _localStorage.setStorageValue("token", token);
-                return true;
+                AuthRequest request = new AuthRequest { Email = email, Password = password };
+
+                var authResponse = await _client.LoginAsync(request);
+                if (authResponse != null && authResponse.Token is not null)
+                {
+                    //extract the token
+                    var token = authResponse.Token;
+                    //read and parse the claims from token
+                    var claims = ParseToken(token);
+                    //create user for the claims
+                    //once user is created, store that user record, store user session as a cookie
+                    //on client side user is a ClaimsPrincipal with claims
+                    //storing that user session(user currently in the system) as a cookie
+                    var user = new ClaimsPrincipal(new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme));
+                    //let the user sign in, by accessing the context of http request which is the current request pipeline
+                    //sign the user in using cookie authentication scheme
+                    var login = _httpContextAccessor.HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, user);
+                    _localStorage.setStorageValue("token", token);
+                    return true;
+                }
+                return false;
             }
-            return false;
+            catch(Exception ex)
+            {
+                return false;
+            }
+
         }
 
+        /// <summary>
+        /// Remove the Jwt from local storage and destroy the user cookies created during the sign in
+        /// </summary>
+        /// <returns></returns>
         public async Task Logout()
         {
             _localStorage.ClearStorageValue("token");
+            //implicitly destroy any user based cookies that were created during the sign in
             await _httpContextAccessor.HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
         }
 
