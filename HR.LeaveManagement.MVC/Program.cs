@@ -4,10 +4,24 @@ using Microsoft.Extensions.DependencyInjection;
 using HR.LeaveManagement.MVC.Services.Base;
 using Hanssens.Net;
 using HR.LeaveManagement.MVC.Contracts;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+//llow http context accessor injectable to any other class
+builder.Services.AddHttpContextAccessor();
+
+builder.Services.Configure<CookiePolicyOptions>(options =>
+{
+    options.MinimumSameSitePolicy = SameSiteMode.None;
+});
+
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
+
+builder.Services.AddTransient<IAuthenticationService, AuthenticationService>();
+
 builder.Services.AddControllersWithViews();
 builder.Services.AddHttpClient<IClient, Client>(c=> c.BaseAddress = new Uri("http://localhost:5098"));
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
@@ -25,12 +39,15 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+app.UseCookiePolicy();
+app.UseAuthentication();
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
 
-//app.UseAuthorization();
+app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",

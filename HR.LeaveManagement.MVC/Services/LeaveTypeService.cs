@@ -6,6 +6,9 @@ using systemNet = System.Net;
 
 namespace HR.LeaveManagement.MVC.Services
 {
+    /// <summary>
+    /// Need bearer token attached to certain service calls which send http request to api associated to Leave Types
+    /// </summary>
     public class LeaveTypeService : BaseHttpService, ILeaveTypeService
     {
         private readonly IClient _httpClient;
@@ -25,6 +28,8 @@ namespace HR.LeaveManagement.MVC.Services
                 var response = new Response<int>();
                 var createLeaveTypeDto = _mapper.Map<CreateLeaveTypeDto>(model);
                 //_client.ReadResponse = true;
+                //before making the client call to the api, add the bearer token to the authorization header of the request of the client
+                AddBearerToken();
                 var apiResult = await _client.LeaveTypesPOSTAsync(createLeaveTypeDto);
                 if (apiResult is null)
                 {

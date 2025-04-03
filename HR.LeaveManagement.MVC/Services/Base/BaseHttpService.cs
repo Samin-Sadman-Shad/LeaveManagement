@@ -14,6 +14,9 @@ namespace HR.LeaveManagement.MVC.Services.Base
             _localStorage = storage;
         }
 
+        /// <summary>
+        /// If the token exists, add it to the Authorization header of the HttpClient
+        /// </summary>
         protected void AddBearerToken()
         {
             if (_localStorage.DoesExist("token"))

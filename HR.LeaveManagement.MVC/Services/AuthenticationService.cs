@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 /*using Microsoft.AspNetCore.Identity.Data;*/
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using HR.LeaveManagement.MVC.Models;
 
 namespace HR.LeaveManagement.MVC.Services
 {
@@ -16,6 +17,12 @@ namespace HR.LeaveManagement.MVC.Services
         //will not be injected, will be initialized in constructor
         private JwtSecurityTokenHandler _jwtSecurityTokenHandler;
 
+        /// <summary>
+        /// Client and local storage services are already injected with their implemntation in program file
+        /// </summary>
+        /// <param name="httpContextAccessor"></param>
+        /// <param name="localStorage"></param>
+        /// <param name="client"></param>
         public AuthenticationService(IHttpContextAccessor httpContextAccessor
             , contracts.ILocalStorageService localStorage, IClient client):base(client, localStorage)
         {
@@ -26,6 +33,7 @@ namespace HR.LeaveManagement.MVC.Services
         /// <summary>
         /// Calls the api for login internally and receives the authResponse with token.
         /// Then extracts the user claims from the token and save it to local storage
+        /// also login the user principle with a cookie 
         /// </summary>
         /// <param name="email"></param>
         /// <param name="password"></param>
@@ -88,6 +96,28 @@ namespace HR.LeaveManagement.MVC.Services
             var response = await _client.RegisterAsync(registerReq);
             if(!String.IsNullOrEmpty(response.UserId))
             {
+                return true;
+
+            }
+            return false;
+        }
+
+        public async Task<bool> Register(RegistrationViewModel vm)
+        {
+            var registerReq = new RegisterRequest
+            {
+                FirstName = vm.FirstName,
+                LastName = vm.LastName,
+                UserName = vm.UserName,
+                Email = vm.Email,
+                Password = vm.Password
+
+            };
+            var response = await _client.RegisterAsync(registerReq);
+            if (!String.IsNullOrEmpty(response.UserId))
+            {
+                //log the user in after successful registration
+                await Authenticate(vm.Email, vm.Password);
                 return true;
 
             }

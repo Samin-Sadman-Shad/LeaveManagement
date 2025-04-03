@@ -19,6 +19,12 @@ namespace HR.LeaveManagement.MVC.Controllers
             return View();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="viewModel"></param>
+        /// <param name="returnUrl"></param>
+        /// <returns></returns>
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginViewModel viewModel, string returnUrl)
         {
@@ -30,6 +36,7 @@ namespace HR.LeaveManagement.MVC.Controllers
                 ModelState.AddModelError("", "Login Failed. Please try again!");
             }
             var isLoggedIn = await _authenticationService.Authenticate(viewModel.Email, viewModel.Password);
+            //already created the user session and stored the jwt in local memory
             if (isLoggedIn)
             {
                 return LocalRedirect(returnUrl);
@@ -51,11 +58,12 @@ namespace HR.LeaveManagement.MVC.Controllers
                 ModelState.AddModelError("", "Registration failed");
             }
 
-            var isRegistered = await _authenticationService.Authenticate(viewModel.Email, viewModel.Password);
+            string returnUrl = Url.Content("~/");
+            var isRegistered = await _authenticationService.Register(viewModel);
             if (isRegistered)
             {
                 //registration is successful
-                return View();
+                return LocalRedirect(returnUrl);
             }
 
             return View(viewModel);
