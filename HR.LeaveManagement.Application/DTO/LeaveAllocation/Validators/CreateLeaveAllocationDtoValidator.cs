@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using HR.LeaveManagement.Application.Contracts.Authentication;
 using HR.LeaveManagement.Application.Contracts.Persistance;
 using System;
 using System.Collections.Generic;
@@ -8,11 +9,20 @@ namespace HR.LeaveManagement.Application.DTO.LeaveAllocation.Validators
 {
     public class CreateLeaveAllocationDtoValidator:AbstractValidator<CreateLeaveAllocationDto>
     {
-        public CreateLeaveAllocationDtoValidator(ILeaveTypeRepository repository)
+        private readonly IUserService _userService;
+        public CreateLeaveAllocationDtoValidator(ILeaveTypeRepository repository, IUserService userService)
         {
             _repository = repository;
+            _userService = userService;
 
             Include(new ILeaveAllocationDtoValidator(repository));
+
+            RuleFor(dto => dto.EmployeeId).NotNull()
+                .MustAsync(async (id, token) =>
+                {
+                    var employeeExists = await _userService.CheckUserExists(id);
+                    return employeeExists;
+                }).WithMessage("{PropertyName} does not exists");
 
             //RuleFor(dto => dto.LeaveTypeId)
             //    .GreaterThan(0)

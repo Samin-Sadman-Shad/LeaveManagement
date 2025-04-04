@@ -11,5 +11,7 @@ namespace HR.LeaveManagement.Domain.Entities
         public LeaveType LeaveType { get; set; } 
         public int NumberOfDays { get; set; }
         public int Period { get; set; }
+
+        public string EmployeeId { get; set; }
     }
 }

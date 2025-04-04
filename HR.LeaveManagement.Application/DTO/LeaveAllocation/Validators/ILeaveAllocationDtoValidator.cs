@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using HR.LeaveManagement.Application.Contracts.Persistance;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Text;

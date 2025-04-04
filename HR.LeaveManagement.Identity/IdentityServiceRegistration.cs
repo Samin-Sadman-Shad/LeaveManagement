@@ -39,7 +39,11 @@ namespace HR.LeaveManagement.Identity
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<LeaveManagementIdentityDbContext>()
                 .AddDefaultTokenProviders();
+
+            //why transient?
+            //everytime user tries to login, a new service will be created
             services.AddTransient<IAuthService, AuthService>();
+            services.AddTransient<IUserService, UserService>();
 
             services.AddAuthentication(options =>
             {
