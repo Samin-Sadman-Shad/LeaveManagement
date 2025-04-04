@@ -1,4 +1,5 @@
 ﻿using HR.LeaveManagement.Application.DTO.LeaveAllocation;
+using HR.LeaveManagement.Application.Features.LeaveAllocation.Requests.Commands;
 using HR.LeaveManagement.Application.Features.LeaveAllocation.Requests.Queries;
 using HR.LeaveManagement.Application.Responses.Common;
 using MediatR;
@@ -74,8 +75,22 @@ namespace HR.LeaveManagement.API.Controllers
 
         // POST api/<LeaveAllocationsController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<ActionResult<CreateCommandResponse<CreateLeaveAllocationDto>>> Post([FromBody] CreateLeaveAllocationDto dto)
         {
+            var leaveAllocationCommand = new CreateLeaveAllocationCommand();
+            leaveAllocationCommand.dto = dto;
+            var response = await _mediator.Send(leaveAllocationCommand);
+            if(response is null)
+            {
+                return StatusCode(500, "Unexpected Error Occurred");
+            }
+            if(response.StatusCode == HttpStatusCode.BadRequest)
+            {
+                return BadRequest(response.Errors);
+            }
+
+            return CreatedAtAction(nameof(Post), response.Message);
+
         }
 
         // PUT api/<LeaveAllocationsController>/5

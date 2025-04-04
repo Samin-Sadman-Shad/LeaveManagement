@@ -15,23 +15,23 @@ namespace HR.LeaveManagement.Application.DTO.LeaveAllocation.Validators
             _repository = repository;
             _userService = userService;
 
-            Include(new ILeaveAllocationDtoValidator(repository));
+            /*            Include(new ILeaveAllocationDtoValidator(repository));
 
-            RuleFor(dto => dto.EmployeeId).NotNull()
+                        RuleFor(dto => dto.EmployeeId).NotNull()
+                            .MustAsync(async (id, token) =>
+                            {
+                                var employeeExists = await _userService.CheckUserExists(id);
+                                return employeeExists;
+                            }).WithMessage("{PropertyName} does not exists");*/
+
+            RuleFor(dto => dto.LeaveTypeId)
+                .GreaterThan(0)
                 .MustAsync(async (id, token) =>
                 {
-                    var employeeExists = await _userService.CheckUserExists(id);
-                    return employeeExists;
-                }).WithMessage("{PropertyName} does not exists");
-
-            //RuleFor(dto => dto.LeaveTypeId)
-            //    .GreaterThan(0)
-            //    .MustAsync(async (id, token) =>
-            //    {
-            //        var leaveTypeExists = await _repository.Exists(id);
-            //        return leaveTypeExists;
-            //    })
-            //    .WithMessage("{PropertyName} does not exists");
+                    var leaveTypeExists = await _repository.Exists(id);
+                    return leaveTypeExists;
+                })
+                .WithMessage("{PropertyName} does not exists");
 
             //RuleFor(dto => dto.NumberOfDays)
             //    .GreaterThan(0);

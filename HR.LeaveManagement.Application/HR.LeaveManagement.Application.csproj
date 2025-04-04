@@ -9,6 +9,8 @@
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
     <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="10.3.0" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="6.0.2" />
+    <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="6.0.2" />
   </ItemGroup>
 
   <ItemGroup>
@@ -16,8 +18,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Features\LeaveAllocation\Handlers\Commands\" />
-    <Folder Include="Features\LeaveAllocation\Requests\Commands\" />
     <Folder Include="Service\" />
     <Folder Include="Responses\LeaveAllocation\" />
   </ItemGroup>
