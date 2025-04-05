@@ -16,7 +16,8 @@ namespace HR.LeaveManagement.Domain.Entities
         public bool? Approved { get; set; }
         public bool Canceled { get; set; }
         public DateTime? DateActioned { get; set; }
-        public string? ActionTakenBy { get; set; }
-        public int? AxtionTakenById { get; set; }
+        /*        public Employee? ActionTakenBy { get; set; }*/
+        public string? ActionTakenById { get; set; }
+        public string? RequestingEmployeeId { get; set; }
     }
 }

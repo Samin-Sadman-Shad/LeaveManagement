@@ -3,6 +3,7 @@ using HR.LeaveManagement.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -35,6 +36,13 @@ namespace HR.LeaveManagement.Persistance.Repositories
             return await _dbContext.leaveAllocations
                 .Include<LeaveAllocation, LeaveType>(l => l.LeaveType)
                 .ToListAsync();
+        }
+
+        public async Task<LeaveAllocation> GetLeaveAllocationByUser(string employeeId, int leaveTypeId)
+        {
+            var allocation = await _dbContext.leaveAllocations.FirstOrDefaultAsync(q => q.EmployeeId == employeeId
+                                                    && q.LeaveTypeId == leaveTypeId);
+            return allocation;
         }
 
         public async Task<LeaveAllocation> GetLeaveAllocationWithDetails(int id)

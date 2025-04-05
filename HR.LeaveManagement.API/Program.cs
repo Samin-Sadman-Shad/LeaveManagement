@@ -12,7 +12,7 @@ using HR.LeaveManagement.Identity;
 var builder = WebApplication.CreateBuilder(args);
 
 
-
+builder.Services.AddHttpContextAccessor();
 builder.Services.ConfigurePersistsanceServices(builder.Configuration);
 builder.Services.ConfigureApplicationServices();
 builder.Services.ConfigureInfrastructureServices(builder.Configuration);

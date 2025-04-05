@@ -8,8 +8,8 @@ namespace HR.LeaveManagement.Domain.Common
     {
         public int Id { get; set; }
         public DateTime DateCreated { get; set; } = DateTime.Now;
-        public string CreatedBy { get; set; } = "admin";
+        public string? CreatedById { get; set; } 
         public DateTime? LastModifiedDate { get; set; }
-        public string? LastModifiedBy { get; set; }
+        public string? LastModifiedById { get; set; }
     }
 }

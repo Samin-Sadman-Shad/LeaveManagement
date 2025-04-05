@@ -19,6 +19,9 @@ namespace HR.LeaveManagement.MVC.Profile
             CreateMap<UpdateLeaveTypeDto, LeaveTypeViewModel>().ReverseMap();
 
             CreateMap<RegistrationViewModel, RegisterRequest>().ReverseMap();
+            CreateMap<LeaveTypeViewModel, LeaveTypeDto>().ReverseMap();
+            CreateMap<LeaveTypeViewModel, CreateLeaveRequestDto>().ReverseMap();
+            CreateMap<CreateLeaveTypeViewModel, CreateLeaveTypeDto>().ReverseMap();
         }
 
         
