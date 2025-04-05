@@ -25,7 +25,8 @@ namespace HR.LeaveManagement.MVC.Controllers
         /// <param name="viewModel"></param>
         /// <param name="returnUrl"></param>
         /// <returns></returns>
-        [HttpPost("login")]
+        /// don't use any argument to HttpPost
+        [HttpPost]
         public async Task<IActionResult> Login([FromBody] LoginViewModel viewModel, string returnUrl)
         {
             returnUrl ??= Url.Content("~/");
@@ -50,7 +51,8 @@ namespace HR.LeaveManagement.MVC.Controllers
             return View();
         }
 
-        [HttpPost("register")]
+        //don't use any argument to HttpPost
+        [HttpPost]
         public async Task<IActionResult> Register([FromBody]RegistrationViewModel viewModel)
         {
             if (!ModelState.IsValid)
