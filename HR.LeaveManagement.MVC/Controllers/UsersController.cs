@@ -72,5 +72,13 @@ namespace HR.LeaveManagement.MVC.Controllers
             ModelState.AddModelError(string.Empty, isRegistered.Error ?? "Registration failed");
             return View(viewModel);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> Logout(string returnUrl)
+        {
+            returnUrl ??= Url.Content("~/");
+            await _authenticationService.Logout();
+            return LocalRedirect(returnUrl);
+        }
     }
 }

@@ -61,7 +61,7 @@ namespace HR.LeaveManagement.MVC.Services
                     var user = new ClaimsPrincipal(new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme));
                     //let the user sign in, by accessing the context of http request which is the current request pipeline
                     //sign the user in using cookie authentication scheme
-                    var login = _httpContextAccessor.HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, user);
+                    var login = _httpContextAccessor?.HttpContext?.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, user);
                     _localStorage.setStorageValue("token", token);
                     result.IsSuccessful = true;
                     return result;
@@ -85,7 +85,7 @@ namespace HR.LeaveManagement.MVC.Services
         {
             _localStorage.ClearStorageValue("token");
             //implicitly destroy any user based cookies that were created during the sign in
-            await _httpContextAccessor.HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            await _httpContextAccessor?.HttpContext?.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
         }
 
 /*        public async Task<bool> Register(string firstName, string lastName, string userName, string email, string password)
