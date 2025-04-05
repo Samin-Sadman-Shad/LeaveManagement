@@ -78,7 +78,7 @@ namespace HR.LeaveManagement.Application.Features.LeaveAllocation.Handlers.Comma
             await _leaveAllocationRepository.AddLeaveAllocations(leaveAllocations);
 
             response.Success = true;
-            response.Message = $"Leave Allocation of {leaveType} to all the employees is successful";
+            response.Message = $"Leave Allocation of {leaveType.LeaveTypeName} to all the employees is successful";
             response.StatusCode = HttpStatusCode.OK;
             return response;
         }

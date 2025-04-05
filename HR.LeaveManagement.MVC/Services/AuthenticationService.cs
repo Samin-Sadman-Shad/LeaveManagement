@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using HR.LeaveManagement.MVC.Models;
+using Microsoft.IdentityModel.Tokens;
 
 namespace HR.LeaveManagement.MVC.Services
 {
@@ -137,6 +138,7 @@ namespace HR.LeaveManagement.MVC.Services
         {
             JwtSecurityToken jwt = _jwtSecurityTokenHandler.ReadJwtToken(token);
             var claims = jwt.Claims.ToList();
+            claims.Add(new Claim(ClaimTypes.Name, jwt.Subject));
             return claims;
         }
     }

@@ -36,7 +36,7 @@
 
                         @if (User.Identity.IsAuthenticated)
                         {
-                            @if (User.IsInRole("Employee"))
+                            @if (true)
                             {
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="LeaveRequests" asp-action="Create">Request Leave</a>
