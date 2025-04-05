@@ -27,7 +27,7 @@ namespace HR.LeaveManagement.MVC.Controllers
         /// <returns></returns>
         /// don't use any argument to HttpPost
         [HttpPost]
-        public async Task<IActionResult> Login([FromBody] LoginViewModel viewModel, string returnUrl)
+        public async Task<IActionResult> Login( LoginViewModel viewModel, string returnUrl)
         {
             returnUrl ??= Url.Content("~/");
             var validator = new LoginVMValidator();
@@ -38,10 +38,11 @@ namespace HR.LeaveManagement.MVC.Controllers
             }
             var isLoggedIn = await _authenticationService.Authenticate(viewModel.Email, viewModel.Password);
             //already created the user session and stored the jwt in local memory
-            if (isLoggedIn)
+            if (isLoggedIn.IsSuccessful)
             {
                 return LocalRedirect(returnUrl);
             }
+            ModelState.AddModelError(string.Empty, isLoggedIn.Error ?? "Login failed");
             return View(viewModel);
             
         }
@@ -53,7 +54,7 @@ namespace HR.LeaveManagement.MVC.Controllers
 
         //don't use any argument to HttpPost
         [HttpPost]
-        public async Task<IActionResult> Register([FromBody]RegistrationViewModel viewModel)
+        public async Task<IActionResult> Register(RegistrationViewModel viewModel)
         {
             if (!ModelState.IsValid)
             {
@@ -62,12 +63,13 @@ namespace HR.LeaveManagement.MVC.Controllers
 
             string returnUrl = Url.Content("~/");
             var isRegistered = await _authenticationService.Register(viewModel);
-            if (isRegistered)
+            if (isRegistered.IsSuccessful)
             {
                 //registration is successful
                 return LocalRedirect(returnUrl);
             }
 
+            ModelState.AddModelError(string.Empty, isRegistered.Error ?? "Registration failed");
             return View(viewModel);
         }
     }

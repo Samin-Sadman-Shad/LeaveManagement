@@ -38,15 +38,18 @@ namespace HR.LeaveManagement.MVC.Services
         /// <param name="email"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        public async Task<bool> Authenticate(string email, string password)
+        public async Task<AuthenticationServiceResponse> Authenticate(string email, string password)
         {
+            var result = new AuthenticationServiceResponse();
             try
             {
+                
                 AuthRequest request = new AuthRequest { Email = email, Password = password };
 
                 var authResponse = await _client.LoginAsync(request);
                 if (authResponse != null && authResponse.Token is not null)
                 {
+                    result.Error = authResponse.AuthError;
                     //extract the token
                     var token = authResponse.Token;
                     //read and parse the claims from token
@@ -60,13 +63,16 @@ namespace HR.LeaveManagement.MVC.Services
                     //sign the user in using cookie authentication scheme
                     var login = _httpContextAccessor.HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, user);
                     _localStorage.setStorageValue("token", token);
-                    return true;
+                    result.IsSuccessful = true;
+                    return result;
                 }
-                return false;
+                result.IsSuccessful = false;
+                return result;
             }
             catch(Exception ex)
             {
-                return false;
+                result.IsSuccessful = false;
+                return result ;
             }
 
         }
@@ -82,7 +88,7 @@ namespace HR.LeaveManagement.MVC.Services
             await _httpContextAccessor.HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
         }
 
-        public async Task<bool> Register(string firstName, string lastName, string userName, string email, string password)
+/*        public async Task<bool> Register(string firstName, string lastName, string userName, string email, string password)
         {
             var registerReq = new RegisterRequest
             {
@@ -100,28 +106,31 @@ namespace HR.LeaveManagement.MVC.Services
 
             }
             return false;
-        }
+        }*/
 
-        public async Task<bool> Register(RegistrationViewModel vm)
+        public async Task<AuthenticationServiceResponse> Register(RegistrationViewModel vm)
         {
+            var result = new AuthenticationServiceResponse();
             var registerReq = new RegisterRequest
             {
                 FirstName = vm.FirstName,
                 LastName = vm.LastName,
-                UserName = vm.UserName,
+                UserName =  vm.FirstName+vm.LastName,
                 Email = vm.Email,
                 Password = vm.Password
 
             };
             var response = await _client.RegisterAsync(registerReq);
+            result.Error = response.RegisterError;
             if (!String.IsNullOrEmpty(response.UserId))
             {
                 //log the user in after successful registration
                 await Authenticate(vm.Email, vm.Password);
-                return true;
+                result.IsSuccessful = true;
+                return result;
 
             }
-            return false;
+            return result;
         }
 
         IList<Claim> ParseToken(string token)

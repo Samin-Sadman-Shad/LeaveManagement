@@ -9,8 +9,8 @@ namespace HR.LeaveManagement.MVC.Models
             RuleFor(vm => vm.Email).NotEmpty().WithMessage("Email can not be empty")
                 .EmailAddress().WithMessage("Please provide a valid email");
 
-            RuleFor(vm => vm.Password).NotEmpty().WithMessage("Password can not be empty")
-                .MinimumLength(6).WithMessage("Minimum 6 characters needed");
+            RuleFor(vm => vm.Password).NotEmpty().WithMessage("Password can not be empty");
+/*                .MinimumLength(3).WithMessage("Minimum 3 characters needed");*/
         }
     }
 }

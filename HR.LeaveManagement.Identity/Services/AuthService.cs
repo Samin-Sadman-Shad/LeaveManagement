@@ -22,11 +22,11 @@ namespace HR.LeaveManagement.Identity.Services
 
         public AuthService(UserManager<ApplicationUser> userManager, 
             SignInManager<ApplicationUser> signInManager,
-            IOptions<JwtSettingOptions>  jwtSettings)
+            JwtSettingOptions  jwtSettings)
         {
             _userManager = userManager;
             _signInManager = signInManager;
-            _jwtSettings = jwtSettings.Value;
+            _jwtSettings = jwtSettings;
 
 
         }
@@ -36,12 +36,20 @@ namespace HR.LeaveManagement.Identity.Services
             var user = await _userManager.FindByEmailAsync(request.Email);
             if (user == null)
             {
-                throw new NotImplementedException();
+                var authReponse = new AuthResponse
+                {
+                    AuthError = "No user with this email has registered"
+                };
+                return authReponse;
             }
             var result = await _signInManager.PasswordSignInAsync(user, request.Password, true, false);
             if(result is null)
             {
-                throw new NotImplementedException();
+                var authReponse = new AuthResponse
+                {
+                    AuthError = "Incorrect password"
+                };
+                return authReponse;
             }
             if (result.Succeeded)
             {
@@ -73,7 +81,12 @@ namespace HR.LeaveManagement.Identity.Services
 
         public async Task<RegisterResponse> Register(RegisterRequest request)
         {
-            var existingUser = await _userManager.FindByNameAsync(request.UserName);
+            ApplicationUser existingUser = null;
+            if(request.UserName is not null)
+            {
+                existingUser = await _userManager.FindByNameAsync(request.UserName);
+            }
+             
             if(existingUser is not null)
             {
                 var response = new RegisterResponse
@@ -98,8 +111,7 @@ namespace HR.LeaveManagement.Identity.Services
                 Email = request.Email,
                 FirstName = request.FirstName,
                 LastName = request.LastName,
-                UserName = request.UserName,
-                
+                UserName = request.UserName ?? request.FirstName + request.LastName,
             };
             var passwordHash = _userManager.PasswordHasher.HashPassword(user, request.Password);
             user.PasswordHash = passwordHash;
@@ -114,7 +126,6 @@ namespace HR.LeaveManagement.Identity.Services
             {
                 throw new Exception($"{result.Errors}");
             }
-            throw new NotImplementedException();
         }
 
         private async Task<JwtSecurityToken> GenerateToken(ApplicationUser user)

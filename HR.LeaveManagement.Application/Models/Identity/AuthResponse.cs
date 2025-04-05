@@ -14,5 +14,7 @@ namespace HR.LeaveManagement.Application.Models.Identity
         public string Password { get; set; }
         public bool IsRegistered { get; set; }
         public string Token { get; set; }
+
+        public string? AuthError { get; set; }
     }
 }
