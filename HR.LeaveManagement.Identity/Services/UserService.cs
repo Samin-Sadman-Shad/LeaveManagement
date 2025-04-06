@@ -31,7 +31,7 @@ namespace HR.LeaveManagement.Identity.Services
 
         public async Task<Employee> GetEmployeeByIdAsync(string id)
         {
-            var users = await _userManager.GetUsersInRoleAsync("Employee");
+/*            var users = await _userManager.GetUsersInRoleAsync("Employee");
             var result = users.Select(user => new Employee
             {
                 Id = user.Id,
@@ -39,7 +39,16 @@ namespace HR.LeaveManagement.Identity.Services
                 FirstName = user.FirstName,
                 LastName = user.LastName,
             }).Where( employee => employee.Id == id).FirstOrDefault();
-            return result;
+            return result;*/
+            var user = await _userManager.FindByIdAsync(id);
+            return new Employee
+            {
+                Id = user.Id,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email
+            };
+
         }
 
         public async Task<List<Employee>> GetEmployeesAsync()
