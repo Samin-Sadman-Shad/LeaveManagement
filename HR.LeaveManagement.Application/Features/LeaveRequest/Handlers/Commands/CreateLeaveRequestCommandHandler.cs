@@ -19,6 +19,7 @@ using HR.LeaveManagement.Application.DTO.LeaveRequest;
 using HR.LeaveManagement.Application.Models.Emails;
 using Microsoft.AspNetCore.Http;
 using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 
 namespace HR.LeaveManagement.Application.Features.LeaveRequest.Handlers.Commands
 {
@@ -112,18 +113,19 @@ namespace HR.LeaveManagement.Application.Features.LeaveRequest.Handlers.Commands
             response.StatusCode = HttpStatusCode.Created;
             //response.StatusMessage = Enum.GetName(HttpStatusCode.Created);
 
-            var emailAddress = _httpAccessor.HttpContext.User.FindFirst(JwtRegisteredClaimNames.Email)?.Value 
-                ?? "employee@gmail.com";
-
-            var email = new Email
-            {
-                /*To = "employee@gmail.com",*/
-                To = emailAddress,
-                Subject = "Leave Request Submitted",
-                Body = $"Your leave request from {request.CreateLeaveRequestDto.StartDate:D} to {request.CreateLeaveRequestDto.EndDate:D} has been submitted"
-            };
+            
             try
             {
+                var emailAddress = _httpAccessor.HttpContext.User.FindFirst(ClaimTypes.Email)?.Value
+                ?? "employee@gmail.com";
+
+                var email = new Email
+                {
+                    /*To = "employee@gmail.com",*/
+                    To = emailAddress,
+                    Subject = "Leave Request Submitted",
+                    Body = $"Your leave request from {request.CreateLeaveRequestDto.StartDate:D} to {request.CreateLeaveRequestDto.EndDate:D} has been submitted"
+                };
                 await _emailSender.SendEmailAsync(email);
             }
             catch (Exception ex) 

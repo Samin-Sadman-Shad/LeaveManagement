@@ -21,6 +21,6 @@ namespace HR.LeaveManagement.MVC.Models
         public int LeaveTypeId { get; set; }
 
         //will be rendered as html <select> items to select from
-        public SelectList LeaveTypes { get; set; }
+        public SelectList? LeaveTypes { get; set; }
     }
 }

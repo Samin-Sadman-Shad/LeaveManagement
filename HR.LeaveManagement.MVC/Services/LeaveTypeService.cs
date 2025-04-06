@@ -72,6 +72,7 @@ namespace HR.LeaveManagement.MVC.Services
             try
             {
                 var response = new Response<int>();
+                AddBearerToken();
                 var result = await _client.LeaveTypesDELETEAsync(id);
                 if(result is null)
                 {
@@ -102,6 +103,7 @@ namespace HR.LeaveManagement.MVC.Services
         {
             try
             {
+                AddBearerToken();
                 var result = await _client.LeaveTypesGETAsync();
                 var leaveTypes = result.Records;
                 return _mapper.Map<List<LeaveTypeViewModel>>(leaveTypes);
@@ -119,6 +121,7 @@ namespace HR.LeaveManagement.MVC.Services
 
         public async Task<LeaveTypeViewModel> GetById(int id)
         {
+            AddBearerToken();
             var result = await _client.LeaveTypesGET2Async(id);
             var leaveType = result.Record;
             return _mapper.Map<LeaveTypeViewModel>(leaveType);

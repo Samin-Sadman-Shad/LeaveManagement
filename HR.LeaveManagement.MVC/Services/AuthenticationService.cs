@@ -62,6 +62,7 @@ namespace HR.LeaveManagement.MVC.Services
                     var user = new ClaimsPrincipal(new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme));
                     //let the user sign in, by accessing the context of http request which is the current request pipeline
                     //sign the user in using cookie authentication scheme
+                   var role = user.IsInRole("Employee");
                     var login = _httpContextAccessor?.HttpContext?.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, user);
                     _localStorage.setStorageValue("token", token);
                     result.IsSuccessful = true;

@@ -40,7 +40,8 @@ namespace HR.LeaveManagement.MVC.Controllers
         {
             var leaveTypes = await _leaveTypeService.GetAll();
 
-            var leaveTypeItems = new SelectList(leaveTypes, "Id", "Name");
+            //Note: DataValueField and DataTextValue must be same as the propertyname of the Type
+            var leaveTypeItems = new SelectList(leaveTypes, "Id", "LeaveTypeName");
 
             var viewModel = new CreateLeaveRequestViewModel
             {
@@ -52,7 +53,7 @@ namespace HR.LeaveManagement.MVC.Controllers
         // POST: LeaveRequestsServiceController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async  Task<ActionResult> Create([FromBody] CreateLeaveRequestViewModel viewModel)
+        public async  Task<ActionResult> Create( CreateLeaveRequestViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
@@ -64,12 +65,13 @@ namespace HR.LeaveManagement.MVC.Controllers
             }
             //load the create page again
             var leaveTypes = await _leaveTypeService.GetAll();
-            var leaveTypeItems = new SelectList(leaveTypes, "Id", "Name");
+            var leaveTypeItems = new SelectList(leaveTypes, "Id", "LeaveTypeName");
             //use the data coming to use as the model, display the incoming data from submission form again
-             viewModel = new CreateLeaveRequestViewModel
+/*             viewModel = new CreateLeaveRequestViewModel
             {
                 LeaveTypes = leaveTypeItems
-            };
+            };*/
+            viewModel.LeaveTypes = leaveTypeItems;
             return View(viewModel);
 
         }

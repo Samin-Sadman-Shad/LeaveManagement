@@ -27,6 +27,7 @@ namespace HR.LeaveManagement.MVC.Services
             {
                 var response = new Response<int>();
                 CreateLeaveRequestDto leaveRequestDto = _mapper.Map<CreateLeaveRequestDto>(viewModel);
+                AddBearerToken();
                 var apiResponse = await _client.LeaveRequestsPOSTAsync(leaveRequestDto);
                 if (apiResponse is null)
                 {

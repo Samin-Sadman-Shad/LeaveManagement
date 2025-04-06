@@ -36,13 +36,13 @@
 
                         @if (User.Identity.IsAuthenticated)
                         {
-                            @if (true)
+                            if (User.IsInRole("Employee"))
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="LeaveRequests" asp-action="Create">Request Leave</a>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="LeaveRequestsService" asp-action="Create">Request Leave</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="LeaveRequests" asp-action="MyLeave">My Leave</a>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="LeaveRequestsService" asp-action="MyLeave">My Leave</a>
                                 </li>
                             }
                             if (User.IsInRole("Administrator"))
