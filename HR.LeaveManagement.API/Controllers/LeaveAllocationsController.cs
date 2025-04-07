@@ -23,10 +23,10 @@ namespace HR.LeaveManagement.API.Controllers
 
         // GET: api/<LeaveAllocationsController>
         [HttpGet]
-        public async Task<ActionResult<BaseQueryListResponse<LeaveAllocationDto>>> Get()
+        public async Task<ActionResult<BaseQueryListResponse<LeaveAllocationDto>>> Get(bool isLoggedInUser = false)
         {
             //return new string[] { "value1", "value2" };
-            var response = await _mediator.Send(new GetLeaveAllocationListRequest());
+            var response = await _mediator.Send(new GetLeaveAllocationListRequest() { isLoggedIn = isLoggedInUser});
             if(response is null)
             {
                 return StatusCode(500, "Unexpected error occured while fetching the data in handler");

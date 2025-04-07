@@ -25,10 +25,10 @@ namespace HR.LeaveManagement.API.Controllers
         }
         // GET: api/<LeaveRequestsController>
         [HttpGet]
-        public async Task<ActionResult<BaseQueryListResponse<LeaveRequestListDto>>> Get()
+        public async Task<ActionResult<BaseQueryListResponse<LeaveRequestListDto>>> Get(bool isLoggedInUser = false)
         {
             //return new string[] { "value1", "value2" };
-            var response = await _mediator.Send(new GetLeaveRequestListRequest());
+            var response = await _mediator.Send(new GetLeaveRequestListRequest() { IsLoggedInUser = isLoggedInUser });
             if (response is null)
             {
                 return StatusCode(500,
