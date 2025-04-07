@@ -59,5 +59,13 @@ namespace HR.LeaveManagement.Persistance.Repositories
                                                                 && q.NumberOfDays == numberOfDays 
                                                                 && q.LeaveTypeId == leaveTypeId);
         }
+
+        public async Task<List<LeaveAllocation>> GetLeaveAllocationsByUserId(string userId)
+        {
+            var leaveAllocations = await _dbContext.leaveAllocations.Where(q => q.EmployeeId == userId)
+               .Include(q => q.LeaveType)
+               .ToListAsync();
+            return leaveAllocations;
+        }
     }
 }

@@ -9,6 +9,6 @@ namespace HR.LeaveManagement.Application.Features.LeaveAllocation.Requests.Queri
 {
     public class GetLeaveAllocationListRequest:IRequest<BaseQueryListResponse<LeaveAllocationDto>>
     {
-
+        public bool isLoggedIn { get; set; }
     }
 }
