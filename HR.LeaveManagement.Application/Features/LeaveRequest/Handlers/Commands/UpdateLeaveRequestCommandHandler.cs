@@ -18,12 +18,15 @@ namespace HR.LeaveManagement.Application.Features.LeaveRequest.Handlers.Commands
     {
         ILeaveRequestRepository _leaveRequestRepository;
         ILeaveTypeRepository _leaveTypeRepository;
+        ILeaveAllocationRepository _leaveAllocationRepository;
         IMapper _mapper;
 
-        public UpdateLeaveRequestCommandHandler(ILeaveRequestRepository repository, ILeaveTypeRepository leaveTypeRepo, IMapper mapper)
+        public UpdateLeaveRequestCommandHandler(ILeaveRequestRepository repository, ILeaveAllocationRepository leaveAllocationRepository
+            ILeaveTypeRepository leaveTypeRepo, IMapper mapper)
         {
             _leaveRequestRepository = repository;
             _leaveTypeRepository = leaveTypeRepo;
+            _leaveAllocationRepository = leaveAllocationRepository;
             _mapper = mapper;
         }
 
@@ -61,6 +64,18 @@ namespace HR.LeaveManagement.Application.Features.LeaveRequest.Handlers.Commands
                 //update the destination entity with corresponding value coming from request
                 //_mapper.Map(request.ChangeLeaveRequestApprovalDto, leaveRequest);
                 await _leaveRequestRepository.ChangeApprovalStatus(leaveRequest, request.ChangeLeaveRequestApprovalDto.IsApproved);
+
+                //if the leave request is approved
+                //deduct the approved days of leave from the allocated leave days for that type and user id
+                if (request.ChangeLeaveRequestApprovalDto.IsApproved is not null 
+                    && request.ChangeLeaveRequestApprovalDto.IsApproved.Value)
+                {
+                    var allocation = await _leaveAllocationRepository.
+                        GetLeaveAllocationByUserIdWithLeaveType(leaveRequest.EmployeeId, leaveRequest.LeaveTypeId);
+                    var approvedDays = (int)(leaveRequest.EndDate - leaveRequest.StartDate).TotalDays;
+                    allocation.NumberOfDays -= approvedDays;
+                    await _leaveAllocationRepository.UpdateAsync(allocation);
+                }
             }
             //return Unit.Value;
             return response;

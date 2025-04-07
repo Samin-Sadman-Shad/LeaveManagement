@@ -63,7 +63,7 @@ namespace HR.LeaveManagement.Application.Features.LeaveRequest.Handlers.Commands
             //Don't put the leave request in the system if request exceeds current allocation for that leave type
             //when admin approve the request, admin make some deduction from the allocated days
             //check leave allocation for this particular employee
-            var allocation = await _leaveAllocationRepository.GetLeaveAllocationByUser(userId, request.CreateLeaveRequestDto.LeaveTypeId);
+            var allocation = await _leaveAllocationRepository.GetLeaveAllocationByUserIdWithLeaveType(userId, request.CreateLeaveRequestDto.LeaveTypeId);
             if (allocation is null)
             {
                 validationResult.Errors.Add(

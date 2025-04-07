@@ -38,7 +38,7 @@ namespace HR.LeaveManagement.Persistance.Repositories
                 .ToListAsync();
         }
 
-        public async Task<LeaveAllocation> GetLeaveAllocationByUser(string employeeId, int leaveTypeId)
+        public async Task<LeaveAllocation> GetLeaveAllocationByUserIdWithLeaveType(string employeeId, int leaveTypeId)
         {
             var allocation = await _dbContext.leaveAllocations.FirstOrDefaultAsync(q => q.EmployeeId == employeeId
                                                     && q.LeaveTypeId == leaveTypeId);

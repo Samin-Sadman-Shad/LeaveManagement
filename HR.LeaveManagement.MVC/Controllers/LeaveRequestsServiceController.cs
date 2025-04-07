@@ -20,15 +20,34 @@ namespace HR.LeaveManagement.MVC.Controllers
         }
 
         // GET: LeaveRequestsServiceController
+        [Authorize(Roles ="Administrator")]
         public ActionResult Index()
         {
-            return View();
+            var model = _leaveRequestService.GetAdminLeaveRequestList();
+            return View(model);
         }
 
         // GET: LeaveRequestsServiceController/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            var model = _leaveRequestService.GetLeaveRequestById(id);
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator")]
+        public async Task<ActionResult> ApproveRequest(int id, bool approval)
+        {
+            try
+            {
+                await _leaveRequestService.ApproveLeaveRequest(id, approval);
+                return RedirectToAction(nameof(Index));
+            }
+            catch(Exception ex)
+            {
+                return RedirectToAction(nameof(Index));
+            }
         }
 
         // GET: LeaveRequestsServiceController/Create
