@@ -101,7 +101,7 @@ namespace HR.LeaveManagement.Application.Features.LeaveRequest.Handlers.Commands
             var leaveRequest = _mapper.Map<entities.LeaveRequest>(request.CreateLeaveRequestDto);
 
             //put employee id data received from the client token
-            leaveRequest.RequestingEmployeeId = userId;
+            leaveRequest.EmployeeId = userId;
 
             //EFCore will update the id
             leaveRequest = await _leaveRequestRepository.AddAsync(leaveRequest);

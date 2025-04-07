@@ -5,6 +5,10 @@ using System.Text;
 
 namespace HR.LeaveManagement.Domain.Entities
 {
+    //no need to save Employee data directly in Entity
+    //relationship with no navigation
+    //relationship not discovered by convention as there is no reference navigation property
+    //but employee is not an Entity
     public class LeaveRequest:BaseDomainEntity
     {
         public int LeaveTypeId { get; set; }
@@ -18,6 +22,10 @@ namespace HR.LeaveManagement.Domain.Entities
         public DateTime? DateActioned { get; set; }
         /*        public Employee? ActionTakenBy { get; set; }*/
         public string? ActionTakenById { get; set; }
-        public string? RequestingEmployeeId { get; set; }
+
+        //only foreign key property is required on the Dependent entity
+        //non nullable, required relationship
+        //reference navigation property to principal is optional
+        public string EmployeeId { get; set; }
     }
 }

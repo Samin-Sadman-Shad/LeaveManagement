@@ -12,6 +12,7 @@ using HR.LeaveManagement.Application.Responses;
 using HR.LeaveManagement.Application.DTO.Common;
 using HR.LeaveManagement.Domain.Entities;
 using HR.LeaveManagement.Application.Responses.Common;
+using HR.LeaveManagement.Application.Contracts.Authentication;
 
 namespace HR.LeaveManagement.Application.Features.LeaveRequest.Handlers.Queries
 {
@@ -20,11 +21,13 @@ namespace HR.LeaveManagement.Application.Features.LeaveRequest.Handlers.Queries
     {
         private readonly ILeaveRequestRepository _leaveRequestRepository;
         private readonly IMapper _mapper;
+        private readonly IUserService _userService;
 
-        public GetLeaveRequestDetailRequestHandler(ILeaveRequestRepository repository, IMapper mapper)
+        public GetLeaveRequestDetailRequestHandler(ILeaveRequestRepository repository, IMapper mapper, IUserService userService)
         {
             _leaveRequestRepository = repository;
             _mapper = mapper;
+            _userService = userService;
         }
         public async Task<BaseQueryResponse<LeaveRequestDto>> Handle(GetLeaveRequestDetailRequest request, CancellationToken cancellationToken)
         {
@@ -38,6 +41,11 @@ namespace HR.LeaveManagement.Application.Features.LeaveRequest.Handlers.Queries
             }
             //return _mapper.Map<LeaveRequestDto>(leaveRequest);
             var record = _mapper.Map<LeaveRequestDto>(leaveRequest);
+
+            //put the employee information in the record
+            var employee = await _userService.GetEmployeeByIdAsync(leaveRequest.EmployeeId);
+            record.Employee = employee;
+
             response.Success = true;
             response.StatusCode = System.Net.HttpStatusCode.OK;
             response.Record = record;
