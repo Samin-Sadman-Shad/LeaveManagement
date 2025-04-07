@@ -23,6 +23,11 @@ namespace HR.LeaveManagement.MVC.Profile
             CreateMap<LeaveTypeViewModel, CreateLeaveRequestDto>().ReverseMap();
             CreateMap<CreateLeaveTypeViewModel, CreateLeaveTypeDto>().ReverseMap();
             CreateMap<CreateLeaveRequestDto, CreateLeaveRequestViewModel>().ReverseMap();
+
+/*            CreateMap<LeaveRequestViewModel, BaseQueryResponseOfLeaveRequestDto.Record>().ReverseMap();
+            CreateMap<LeaveRequestViewModel, BaseQueryListResponseOfLeaveRequestListDto>().ReverseMap();
+            CreateMap<LeaveTypeViewModel, BaseQueryResponseOfLeaveTypeDto>().ReverseMap();
+            CreateMap<LeaveTypeViewModel, BaseQueryListResponseOfLeaveTypeDto>().ReverseMap();*/
         }
 
         

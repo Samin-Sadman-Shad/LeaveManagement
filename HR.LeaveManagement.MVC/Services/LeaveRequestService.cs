@@ -21,6 +21,21 @@ namespace HR.LeaveManagement.MVC.Services
             _mapper = mapper;
         }
 
+        public async Task ApproveLeaveRequest(int id, bool approval)
+        {
+            AddBearerToken();
+            try
+            {
+                var changeLeaveRequestApprovalDto = new ChangeLeaveRequestApprovalDto { Id = id, IsApproved = approval };
+                var response = await _client.ChangeApprovalAsync(id, changeLeaveRequestApprovalDto);
+            }
+            catch(Exception ex)
+            {
+                throw;
+            }
+
+        }
+
         public async Task<Response<int>> CreateLeaveRequest(CreateLeaveRequestViewModel viewModel)
         {
             try
@@ -67,6 +82,35 @@ namespace HR.LeaveManagement.MVC.Services
         public Task<Response<bool>> DeleteLeaveRequest(int leaveRequestId)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<AdminLeaveRequestViewModel> GetAdminLeaveRequestList()
+        {
+            AddBearerToken();
+            var leaveRequests = await _client.LeaveRequestsGETAsync();
+            var model = new AdminLeaveRequestViewModel
+            {
+                TotalRequests = leaveRequests.Records.Count(),
+                ApprovedRequests = leaveRequests.Records.Count(record => record.Approved == true),
+                PendingRequests = leaveRequests.Records.Count(record => record.Approved == null),
+                RejectedRequests = leaveRequests.Records.Count(record => record.Approved == false),
+                LeaveRequests = _mapper.Map<List<LeaveRequestViewModel>>(leaveRequests.Records)
+            };
+            return model;
+        }
+
+        public async Task<LeaveRequestViewModel> GetLeaveRequestById(int id)
+        {
+            AddBearerToken();
+            try
+            {
+                var leaveRequest = await _client.LeaveRequestsGET2Async(id);
+                return _mapper.Map<LeaveRequestViewModel>(leaveRequest.Record);
+            }
+            catch(Exception ex)
+            {
+                throw;
+            }
         }
     }
 }
