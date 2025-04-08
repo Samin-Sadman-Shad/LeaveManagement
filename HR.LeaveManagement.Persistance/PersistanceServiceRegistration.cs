@@ -18,6 +18,7 @@ namespace HR.LeaveManagement.Persistance
             services.AddDbContext<LeaveManagementDbContext>(options =>
             options.UseSqlServer(configuration.GetConnectionString("LeaveManagementConnectionString")));
 
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddScoped<ILeaveRequestRepository, LeaveRequestRepository>();
             services.AddScoped<ILeaveAllocationRepository, LeaveAllocationRepository>();
