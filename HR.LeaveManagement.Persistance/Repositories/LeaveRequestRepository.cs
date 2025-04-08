@@ -19,7 +19,7 @@ namespace HR.LeaveManagement.Persistance.Repositories
         {
             leaveRequest.Approved = status;
             _dbContext.Entry(leaveRequest).State = EntityState.Modified;
-            await _dbContext.SaveChangesAsync();
+/*            await _dbContext.SaveChangesAsync();*/
         }
 
         public async Task<IReadOnlyList<LeaveRequest>> GetAllLeaveRequestsWithDetail()
