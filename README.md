@@ -6,4 +6,4 @@ Developed a full-stack leave management portal using Clean (Onion) Architecture 
 •	Integrated FluentValidation for input validation and Entity Framework Core for data access
 •	Used AutoMapper for mapping between DTOs and domain models
 •	Wrote unit tests with Moq and Shouldly to ensure reliability
-Technologies: ASP.NET Core, EF Core, ASP.NET Core Identity, MediatR, AutoMapper, FluentValidation, Moq, Shouldly, SQL Server, Razo Pages
+Technologies: ASP.NET Core, EF Core, ASP.NET Core Identity, MediatR, AutoMapper, FluentValidation, Moq, Shouldly, SQL Server, Razor Pages
